@@ -1,35 +1,64 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { ChangeEvent, Component } from 'react';
+import Search from './components/Search';
+import SearchResults from './components/SearchResults';
+import { Animal } from './interfaces/Animal';
+import { fetchPage } from './services/Animal';
+import { getSearchValue, setSearchValue } from './utils';
 
-function App() {
-  const [count, setCount] = useState(0);
+interface AppState {
+  searchValue: string;
+  searchResults: Animal[];
+}
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+class App extends Component<object, AppState> {
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      searchValue: getSearchValue(),
+      searchResults: [],
+    };
+  }
+
+  componentDidMount() {
+    const { searchValue } = this.state;
+    fetchPage(searchValue).then(({ animals }) => {
+      this.setState({ searchResults: animals });
+    });
+  }
+
+  handleSearch = () => {
+    const trimmedSearchValue = this.state.searchValue.trim();
+    const previousSearchValue = getSearchValue();
+    if (previousSearchValue === trimmedSearchValue) {
+      return;
+    }
+    fetchPage(trimmedSearchValue).then(({ animals }) => {
+      this.setState({ searchResults: animals });
+      setSearchValue(trimmedSearchValue);
+    });
+  };
+
+  handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ searchValue: event.target.value });
+  };
+
+  render() {
+    const { searchValue, searchResults } = this.state;
+    return (
+      <div className="app">
+        <div className="top-section">
+          <Search
+            value={searchValue}
+            onSearch={this.handleSearch}
+            onChange={this.handleSearchValueChange}
+          />
+        </div>
+        <div className="bottom-section">
+          <SearchResults searchResults={searchResults} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+    );
+  }
 }
 
 export default App;
