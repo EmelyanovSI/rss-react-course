@@ -1,11 +1,15 @@
 import { ChangeEvent, Component } from 'react';
+import Content from './components/Content';
+import Header from './components/Header';
 import Search from './components/Search';
 import SearchResults from './components/SearchResults';
+import { Status } from './constants/enums';
 import { Animal } from './interfaces/Animal';
+import { Loading } from './interfaces/Loading';
 import { fetchPage } from './services/Animal';
-import { getSearchValue, setSearchValue } from './utils';
+import { getSearchValue } from './utils';
 
-interface AppState {
+interface AppState extends Loading {
   searchValue: string;
   searchResults: Animal[];
 }
@@ -16,47 +20,56 @@ class App extends Component<object, AppState> {
     this.state = {
       searchValue: getSearchValue(),
       searchResults: [],
+      status: Status.Idle,
+      message: '',
     };
   }
 
-  componentDidMount() {
-    const { searchValue } = this.state;
-    fetchPage(searchValue).then(({ animals }) => {
-      this.setState({ searchResults: animals });
-    });
-  }
+  fetchData = (searchValue: string) => {
+    this.setState({ status: Status.Loading });
+    fetchPage(searchValue)
+      .then(({ animals }) => {
+        this.setState({ searchResults: animals });
+        this.setState({ status: Status.Succeeded });
+      })
+      .catch((reason) => {
+        this.setState({ message: reason });
+        this.setState({ status: Status.Failed });
+      });
+  };
 
   handleSearch = () => {
     const trimmedSearchValue = this.state.searchValue.trim();
     const previousSearchValue = getSearchValue();
-    if (previousSearchValue === trimmedSearchValue) {
-      return;
+    if (previousSearchValue !== trimmedSearchValue) {
+      this.fetchData(trimmedSearchValue);
     }
-    fetchPage(trimmedSearchValue).then(({ animals }) => {
-      this.setState({ searchResults: animals });
-      setSearchValue(trimmedSearchValue);
-    });
   };
 
   handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchValue: event.target.value });
   };
 
+  componentDidMount() {
+    this.fetchData(this.state.searchValue);
+  }
+
   render() {
-    const { searchValue, searchResults } = this.state;
+    const { searchValue, searchResults, status, message } = this.state;
+
     return (
-      <div className="app">
-        <div className="top-section">
+      <>
+        <Header>
           <Search
             value={searchValue}
             onSearch={this.handleSearch}
             onChange={this.handleSearchValueChange}
           />
-        </div>
-        <div className="bottom-section">
+        </Header>
+        <Content {...{ status, message }}>
           <SearchResults searchResults={searchResults} />
-        </div>
-      </div>
+        </Content>
+      </>
     );
   }
 }
