@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { Animal } from '../interfaces/Animal';
+import Card from './Card';
+import './SearchResults.css';
 
 interface SearchResultsProps {
   searchResults: Animal[];
@@ -8,19 +10,20 @@ interface SearchResultsProps {
 class SearchResults extends Component<SearchResultsProps> {
   render() {
     return (
-      <div>
-        <ul>
-          {this.props.searchResults.map((item) => (
-            <li key={item.uid}>
-              <h3>{item.name}</h3>
-              <p>{item.earthAnimal && 'Animal'}</p>
-              <p>{item.avian && 'Bird'}</p>
-              <p>{item.earthInsect && 'Insect'}</p>
-              <p>{item.feline && 'Kitty'}</p>
-              <p>{item.canine && 'Doggy'}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="result">
+        {this.props.searchResults.map(
+          ({ uid, name, earthAnimal, avian, earthInsect, feline, canine }) => (
+            <Card key={uid} title={name}>
+              <ul>
+                {earthAnimal && <li>Animal</li>}
+                {avian && <li>Bird</li>}
+                {earthInsect && <li>Insect</li>}
+                {feline && <li>Kitty</li>}
+                {canine && <li>Doggy</li>}
+              </ul>
+            </Card>
+          )
+        )}
       </div>
     );
   }
