@@ -7,7 +7,7 @@ import { Status } from './constants/enums';
 import { Animal } from './interfaces/Animal';
 import { Loading } from './interfaces/Loading';
 import { fetchPage } from './services/Animal';
-import { getSearchValue } from './utils';
+import { getSearchValue, setSearchValue } from './utils';
 
 interface AppState extends Loading {
   searchValue: string;
@@ -42,6 +42,7 @@ class App extends Component<object, AppState> {
     const trimmedSearchValue = this.state.searchValue.trim();
     const previousSearchValue = getSearchValue();
     if (previousSearchValue !== trimmedSearchValue) {
+      setSearchValue(trimmedSearchValue);
       this.fetchData(trimmedSearchValue);
     }
   };
