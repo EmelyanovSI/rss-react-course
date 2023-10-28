@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react';
-import { Status } from '../constants/enums';
-import { Loading } from '../interfaces/Loading';
+import { Status } from '../../constants/enums';
+import { Loading } from '../../interfaces/Loading';
 
 interface ContentProps extends Loading {
   children: ReactNode;

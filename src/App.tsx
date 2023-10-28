@@ -1,8 +1,8 @@
 import { ChangeEvent, Component } from 'react';
-import Content from './components/Content';
-import Header from './components/Header';
-import Search from './components/Search';
-import SearchResults from './components/SearchResults';
+import Content from './components/Content/Content';
+import Header from './components/Header/Header';
+import Search from './components/Search/Search';
+import SearchResults from './components/SearchResults/SearchResults';
 import { Status } from './constants/enums';
 import { Animal } from './interfaces/Animal';
 import { Loading } from './interfaces/Loading';

@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { Animal } from '../interfaces/Animal';
-import Card from './Card';
+import { Animal } from '../../interfaces/Animal';
+import Card from '../Card/Card';
 import './SearchResults.css';
 
 interface SearchResultsProps {
