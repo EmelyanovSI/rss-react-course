@@ -1,8 +1,12 @@
 import { VITE_BASE_URL } from '../constants';
 import { AnimalResponse } from '../interfaces/Animal';
 
-export async function fetchPage(searchValue: string): Promise<AnimalResponse> {
-  const apiUrl = `${VITE_BASE_URL}/animal/search`;
+export async function fetchPage(
+  searchValue: string,
+  pageNumber = 0,
+  pageSize = 100
+): Promise<AnimalResponse> {
+  const apiUrl = `${VITE_BASE_URL}/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
   const requestBody = new URLSearchParams();
   requestBody.append('name', searchValue);
 
