@@ -1,0 +1,21 @@
+ul {
+  padding-left: 20px;
+  margin-bottom: 0;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  align-self: stretch;
+  border: 1px solid #CAC4D0;
+  background: #FEF7FF;
+  border-radius: 12px;
+  padding: 10px;
+  width: 180px;
+}
