@@ -10,7 +10,7 @@
   gap: 4px;
   padding: 4px;
   border-radius: 28px;
-  background: #ECE6F0;
+  background: #ece6f0;
 }
 
 .search-input {
@@ -19,7 +19,7 @@
   gap: 10px;
   flex: 1 0 0;
   align-self: stretch;
-  color: #49454F;
+  color: #49454f;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
