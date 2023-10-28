@@ -9,9 +9,15 @@ interface SearchResultsProps {
 
 class SearchResults extends Component<SearchResultsProps> {
   render() {
+    const { searchResults } = this.props;
+
+    if (!searchResults.length) {
+      return <div>No results found</div>;
+    }
+
     return (
       <div className="result">
-        {this.props.searchResults.map(
+        {searchResults.map(
           ({ uid, name, earthAnimal, avian, earthInsect, feline, canine }) => (
             <Card key={uid} title={name}>
               <ul>
