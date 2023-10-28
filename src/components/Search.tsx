@@ -1,4 +1,5 @@
 import { ChangeEvent, Component } from 'react';
+import './Search.css';
 
 interface SearchProps {
   value: string;
@@ -9,14 +10,18 @@ interface SearchProps {
 class Search extends Component<SearchProps> {
   render() {
     return (
-      <div>
+      <div className="search-bar">
         <input
+          className="search-input"
+          name="search"
           type="search"
+          placeholder="Search..."
           value={this.props.value}
           onChange={this.props.onChange}
-          placeholder="Search..."
         />
-        <button onClick={this.props.onSearch}>Search</button>
+        <button className="search-button" onClick={this.props.onSearch}>
+          <i className="material-icons">search</i>
+        </button>
       </div>
     );
   }
