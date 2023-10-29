@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import Button from '../Button/Button';
-import { ErrorBoundaryState } from '../ErrorBoundary/ErrorBoundary';
+import Button from '../Button';
+import { ErrorBoundaryState } from '../ErrorBoundary';
 
 class ErrorButton extends Component<object, ErrorBoundaryState> {
   constructor(props: object) {

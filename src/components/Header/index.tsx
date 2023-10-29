@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import './Header.css';
+import './index.css';
 
 interface HeaderProps {
   children: ReactNode;

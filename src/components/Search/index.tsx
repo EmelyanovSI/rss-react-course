@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ChangeEvent, Component } from 'react';
-import './Search.css';
+import './index.css';
 
 interface SearchProps {
   value: string;

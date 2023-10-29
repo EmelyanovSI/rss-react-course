@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import './Alert.css';
+import './index.css';
 
 interface ContentProps {
   message: string;

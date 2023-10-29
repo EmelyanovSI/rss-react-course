@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { Animal } from '../../interfaces/Animal';
-import Alert from '../Alert/Alert';
-import Card from '../Card/Card';
-import './SearchResults.css';
+import Alert from '../Alert';
+import Card from '../Card';
+import './index.css';
 
 interface SearchResultsProps {
   searchResults: Animal[];

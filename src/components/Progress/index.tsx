@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import './Progress.css';
+import './index.css';
 
 class Progress extends Component {
   render() {
