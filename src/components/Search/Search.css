@@ -31,7 +31,8 @@
   outline: none;
 }
 
-.search-button, .back-button {
+.search-button,
+.back-button {
   display: flex;
   align-items: center;
   border-radius: 26px;
