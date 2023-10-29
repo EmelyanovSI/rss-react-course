@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Animal } from '../../interfaces/Animal';
+import Alert from '../Alert/Alert';
 import Card from '../Card/Card';
 import './SearchResults.css';
 
@@ -12,7 +13,7 @@ class SearchResults extends Component<SearchResultsProps> {
     const { searchResults } = this.props;
 
     if (!searchResults.length) {
-      return <div>No results found</div>;
+      return <Alert message="No results found." />;
     }
 
     return (
