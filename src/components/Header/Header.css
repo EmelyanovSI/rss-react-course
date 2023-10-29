@@ -1,5 +1,6 @@
 .header {
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  height: 70px;
+  border-bottom: 1px solid var(--border-light);
 }

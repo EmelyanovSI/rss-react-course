@@ -38,6 +38,10 @@ class App extends Component<object, AppState> {
       });
   };
 
+  handleBack = () => {
+    this.setState({ searchValue: getSearchValue() });
+  };
+
   handleSearch = () => {
     const trimmedSearchValue = this.state.searchValue.trim();
     const previousSearchValue = getSearchValue();
@@ -63,6 +67,7 @@ class App extends Component<object, AppState> {
         <Header>
           <Search
             value={searchValue}
+            onBack={this.handleBack}
             onSearch={this.handleSearch}
             onChange={this.handleSearchValueChange}
           />
