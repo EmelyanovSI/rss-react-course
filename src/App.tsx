@@ -1,5 +1,6 @@
 import { ChangeEvent, Component } from 'react';
 import Content from './components/Content/Content';
+import ErrorButton from './components/ErrorButton/ErrorButton';
 import Header from './components/Header/Header';
 import Search from './components/Search/Search';
 import SearchResults from './components/SearchResults/SearchResults';
@@ -65,6 +66,7 @@ class App extends Component<object, AppState> {
     return (
       <>
         <Header>
+          <ErrorButton />
           <Search
             value={searchValue}
             onBack={this.handleBack}
