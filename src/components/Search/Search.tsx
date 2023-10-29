@@ -45,10 +45,17 @@ class Search extends Component<SearchProps, SearchState> {
 
     return (
       <div className={searchBar}>
-        <button type="button" className={backButton} onClick={this.handleBack}>
+        <button
+          aria-label="Back"
+          title="Back"
+          type="button"
+          className={backButton}
+          onClick={this.handleBack}
+        >
           <span className="material-icons">arrow_back</span>
         </button>
         <input
+          aria-label="Search value"
           className="search-input"
           name="search"
           type="search"
@@ -58,6 +65,8 @@ class Search extends Component<SearchProps, SearchState> {
           onFocus={this.handleFocus}
         />
         <button
+          aria-label="Search"
+          title="Search"
           type="button"
           className="search-button"
           onClick={this.handleSearch}
