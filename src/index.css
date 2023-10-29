@@ -1,0 +1,23 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --primary-light: #a13f28;
+  --bg-primary-light: #f5ddd8;
+  --border-light: #cac4d0;
+  --bg-light: #fef7ff;
+  --shadow: 0 0 0;
+  --elevation: 0px 3px 1px -2px rgb(var(--shadow) / 0.2),
+    0px 2px 2px 0px rgb(var(--shadow) / 0.14),
+    0px 1px 5px 0px rgb(var(--shadow) / 0.12);
+}
+
+body {
+  margin: 0;
+}
