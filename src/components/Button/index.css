@@ -1,0 +1,21 @@
+.button {
+  display: flex;
+  gap: 8px;
+  width: auto;
+  height: 40px;
+  padding: 10px;
+  margin: 10px 24px;
+  border: 1px solid var(--border-light);
+  border-radius: 26px;
+  background: var(--bg-light);
+  transition: 0.2s ease-in-out 0s;
+  white-space: nowrap;
+}
+
+.button:hover {
+  box-shadow: var(--elevation);
+}
+
+.button:active {
+  box-shadow: none;
+}
