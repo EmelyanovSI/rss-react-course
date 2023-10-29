@@ -10,26 +10,27 @@ interface ContentProps extends Loading {
 }
 
 class Content extends Component<ContentProps> {
+  renderContent() {
+    const { status, message, children } = this.props;
+
+    switch (status) {
+      case Status.Idle:
+        return null;
+      case Status.Loading:
+        return <Progress />;
+      case Status.Failed:
+        return (
+          <div className="content">
+            <Alert message={message} />
+          </div>
+        );
+      default:
+        return <div className="content">{children}</div>;
+    }
+  }
+
   render() {
-    const { children, status, message } = this.props;
-
-    if (status === Status.Idle) {
-      return null;
-    }
-
-    if (status === Status.Loading) {
-      return <Progress />;
-    }
-
-    if (status === Status.Failed) {
-      return (
-        <div className="content">
-          <Alert message={message} />
-        </div>
-      );
-    }
-
-    return <div className="content">{children}</div>;
+    return this.renderContent();
   }
 }
 

@@ -7,14 +7,12 @@ interface ButtonProps {
 }
 
 class Button extends Component<ButtonProps> {
-  constructor(props: ButtonProps) {
-    super(props);
-  }
-
   render() {
+    const { children, onClick } = this.props;
+
     return (
-      <button type="button" className="button" onClick={this.props.onClick}>
-        {this.props.children}
+      <button type="button" className="button" onClick={onClick}>
+        {children}
       </button>
     );
   }

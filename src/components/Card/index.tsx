@@ -8,10 +8,12 @@ interface CardProps {
 
 class Card extends Component<CardProps> {
   render() {
+    const { title, children } = this.props;
+
     return (
       <div className="card">
-        <h2>{this.props.title}</h2>
-        {this.props.children}
+        <h2>{title}</h2>
+        {children}
       </div>
     );
   }

@@ -26,16 +26,24 @@ class App extends Component<object, AppState> {
     };
   }
 
+  componentDidMount() {
+    this.fetchData(this.state.searchValue);
+  }
+
   fetchData = (searchValue: string) => {
     this.setState({ status: Status.Loading });
     fetchPage(searchValue)
       .then(({ animals }) => {
-        this.setState({ searchResults: animals });
-        this.setState({ status: Status.Succeeded });
+        this.setState({
+          searchResults: animals,
+          status: Status.Succeeded,
+        });
       })
-      .catch((reason) => {
-        this.setState({ message: reason });
-        this.setState({ status: Status.Failed });
+      .catch((reason: string) => {
+        this.setState({
+          message: reason,
+          status: Status.Failed,
+        });
       });
   };
 
@@ -55,10 +63,6 @@ class App extends Component<object, AppState> {
   handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchValue: event.target.value });
   };
-
-  componentDidMount() {
-    this.fetchData(this.state.searchValue);
-  }
 
   render() {
     const { searchValue, searchResults, status, message } = this.state;

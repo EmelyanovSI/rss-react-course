@@ -9,6 +9,38 @@ interface SearchResultsProps {
 }
 
 class SearchResults extends Component<SearchResultsProps> {
+  renderAnimalFeatures({
+    earthAnimal,
+    avian,
+    earthInsect,
+    feline,
+    canine,
+  }: Animal) {
+    const features = [];
+
+    if (earthAnimal) features.push('Animal');
+    if (avian) features.push('Bird');
+    if (earthInsect) features.push('Insect');
+    if (feline) features.push('Kitty');
+    if (canine) features.push('Doggy');
+
+    return features;
+  }
+
+  renderCards() {
+    const { searchResults } = this.props;
+
+    return searchResults.map((animal) => (
+      <Card key={animal.uid} title={animal.name}>
+        <ul>
+          {this.renderAnimalFeatures(animal).map((feature) => (
+            <li key={feature}>{feature}</li>
+          ))}
+        </ul>
+      </Card>
+    ));
+  }
+
   render() {
     const { searchResults } = this.props;
 
@@ -16,23 +48,7 @@ class SearchResults extends Component<SearchResultsProps> {
       return <Alert message="No results found." />;
     }
 
-    return (
-      <div className="result">
-        {searchResults.map(
-          ({ uid, name, earthAnimal, avian, earthInsect, feline, canine }) => (
-            <Card key={uid} title={name}>
-              <ul>
-                {earthAnimal && <li>Animal</li>}
-                {avian && <li>Bird</li>}
-                {earthInsect && <li>Insect</li>}
-                {feline && <li>Kitty</li>}
-                {canine && <li>Doggy</li>}
-              </ul>
-            </Card>
-          )
-        )}
-      </div>
-    );
+    return <div className="result">{this.renderCards()}</div>;
   }
 }
 

@@ -1,16 +1,18 @@
 import { Component } from 'react';
 import './index.css';
 
-interface ContentProps {
+interface AlertProps {
   message: string;
 }
 
-class Alert extends Component<ContentProps> {
+class Alert extends Component<AlertProps> {
   render() {
+    const { message } = this.props;
+
     return (
       <div className="error">
         <span className="material-icons">error_outline</span>
-        <span>{this.props.message}</span>
+        <span>{message}</span>
       </div>
     );
   }
