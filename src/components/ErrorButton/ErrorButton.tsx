@@ -1,0 +1,32 @@
+import { Component } from 'react';
+import Button from '../Button/Button';
+import { ErrorBoundaryState } from '../ErrorBoundary/ErrorBoundary';
+
+class ErrorButton extends Component<object, ErrorBoundaryState> {
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      hasError: false,
+    };
+  }
+
+  triggerError = () => {
+    throw new Error('This is a test error');
+  };
+
+  handleThrowError = () => {
+    this.setState({ hasError: true });
+  };
+
+  componentDidUpdate() {
+    if (this.state.hasError) {
+      this.triggerError();
+    }
+  }
+
+  render() {
+    return <Button onClick={this.handleThrowError}>Throw Error</Button>;
+  }
+}
+
+export default ErrorButton;
