@@ -8,6 +8,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
+  --primary-light: #a13f28;
+  --bg-primary-light: #f5ddd8;
   --border-light: #CAC4D0;
   --bg-light: #FEF7FF;
   --shadow: 0 0 0;

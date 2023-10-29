@@ -1,6 +1,7 @@
 import { Component, ReactNode } from 'react';
 import { Status } from '../../constants/enums';
 import { Loading } from '../../interfaces/Loading';
+import Progress from '../Progress/Progress';
 
 interface ContentProps extends Loading {
   children: ReactNode;
@@ -15,7 +16,7 @@ class Content extends Component<ContentProps> {
     }
 
     if (status === Status.Loading) {
-      return <div>Loading...</div>;
+      return <Progress />;
     }
 
     if (status === Status.Failed) {
