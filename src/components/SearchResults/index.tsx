@@ -1,20 +1,20 @@
-import { Component } from 'react';
+import { FC } from 'react';
 import { Animal } from '../../interfaces/Animal';
 import Alert from '../Alert';
 import Card from '../Card';
 
 interface SearchResultsProps {
-  searchResults: Animal[];
+  results: Animal[];
 }
 
-class SearchResults extends Component<SearchResultsProps> {
-  renderAnimalFeatures({
+const SearchResults: FC<SearchResultsProps> = ({ results }) => {
+  const renderAnimalFeatures = ({
     earthAnimal,
     avian,
     earthInsect,
     feline,
     canine,
-  }: Animal) {
+  }: Animal) => {
     const features = [];
 
     if (earthAnimal) features.push('Animal');
@@ -24,37 +24,27 @@ class SearchResults extends Component<SearchResultsProps> {
     if (canine) features.push('Doggy');
 
     return features;
+  };
+
+  if (!results.length) {
+    return <Alert message="No results found." severity="warning" />;
   }
 
-  renderCards() {
-    const { searchResults } = this.props;
-
-    return searchResults.map((animal) => (
-      <Card key={animal.uid} title={animal.name}>
-        <ul>
-          {this.renderAnimalFeatures(animal).map((feature) => (
-            <li key={feature} className="font-thin text-sm">
-              {feature}
-            </li>
-          ))}
-        </ul>
-      </Card>
-    ));
-  }
-
-  render() {
-    const { searchResults } = this.props;
-
-    if (!searchResults.length) {
-      return <Alert message="No results found." severity="warning" />;
-    }
-
-    return (
-      <div className="flex flex-wrap justify-center gap-4">
-        {this.renderCards()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="flex flex-wrap justify-center gap-4">
+      {results.map((animal) => (
+        <Card key={animal.uid} title={animal.name}>
+          <ul>
+            {renderAnimalFeatures(animal).map((feature) => (
+              <li key={feature} className="font-thin text-sm">
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      ))}
+    </div>
+  );
+};
 
 export default SearchResults;

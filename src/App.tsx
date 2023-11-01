@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Content from './components/Content';
 import ErrorButton from './components/ErrorButton';
 import Header from './components/Header';
@@ -6,76 +6,53 @@ import Search from './components/Search';
 import SearchResults from './components/SearchResults';
 import { Status } from './constants/enums';
 import { Animal } from './interfaces/Animal';
-import { Loading } from './interfaces/Loading';
 import { fetchPage } from './services/Animal';
 import { getSearchValue, setSearchValue } from './utils';
 
-interface AppState extends Loading {
-  searchValue: string;
-  searchResults: Animal[];
-}
+const App: FC = () => {
+  const [value, setValue] = useState<string>(getSearchValue());
+  const [results, setResults] = useState<Animal[]>([]);
+  const [status, setStatus] = useState<Status>(Status.Idle);
+  const [message, setMessage] = useState<string>('');
 
-class App extends Component<object, AppState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      searchValue: getSearchValue(),
-      searchResults: [],
-      status: Status.Idle,
-      message: '',
+  useEffect(() => {
+    fetchData(value);
+  }, [value]);
+
+  useEffect(() => {
+    return () => {
+      setSearchValue(value);
     };
-  }
+  });
 
-  componentDidMount() {
-    this.fetchData(this.state.searchValue);
-  }
-
-  fetchData = (searchValue: string) => {
-    this.setState({ status: Status.Loading });
+  const fetchData = (searchValue: string) => {
+    setStatus(Status.Loading);
     fetchPage(searchValue)
       .then(({ animals }) => {
-        this.setState({
-          searchResults: animals,
-          status: Status.Succeeded,
-        });
+        setResults(animals);
+        setStatus(Status.Succeeded);
       })
       .catch((reason: string) => {
-        this.setState({
-          message: reason,
-          status: Status.Failed,
-        });
+        setMessage(reason);
+        setStatus(Status.Failed);
       });
   };
 
-  handleSearch = (searchValue: string) => {
-    setSearchValue(searchValue);
-    this.setState({ searchValue });
-    this.fetchData(searchValue);
+  const handleSearch = (searchValue: string) => {
+    setValue(searchValue);
   };
 
-  handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchValue: event.target.value });
-  };
-
-  render() {
-    const { searchValue, searchResults, status, message } = this.state;
-
-    return (
-      <>
-        <Header>
-          <ErrorButton />
-          <Search
-            value={searchValue}
-            onSearch={this.handleSearch}
-            onChange={this.handleSearchValueChange}
-          />
-        </Header>
-        <Content {...{ status, message }}>
-          <SearchResults searchResults={searchResults} />
-        </Content>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Header>
+        <ErrorButton />
+        <Search value={value} onSearch={handleSearch} />
+      </Header>
+      <Content {...{ status, message }}>
+        <SearchResults results={results} />
+      </Content>
+    </>
+  );
+};
 
 export default App;

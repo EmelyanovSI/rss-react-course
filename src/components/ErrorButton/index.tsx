@@ -1,36 +1,28 @@
-import { Component } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from '../Button';
-import { ErrorBoundaryState } from '../ErrorBoundary';
 
-class ErrorButton extends Component<object, ErrorBoundaryState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      hasError: false,
-    };
-  }
+const ErrorButton: FC = () => {
+  const [hasError, setHasError] = useState(false);
 
-  triggerError = () => {
+  const triggerError = () => {
     throw new Error('This is a test error');
   };
 
-  handleThrowError = () => {
-    this.setState({ hasError: true });
+  const handleThrowError = () => {
+    setHasError(true);
   };
 
-  componentDidUpdate() {
-    if (this.state.hasError) {
-      this.triggerError();
+  useEffect(() => {
+    if (hasError) {
+      triggerError();
     }
-  }
+  }, [hasError]);
 
-  render() {
-    return (
-      <Button icon="report" onClick={this.handleThrowError}>
-        Throw an Error
-      </Button>
-    );
-  }
-}
+  return (
+    <Button icon="report" onClick={handleThrowError}>
+      Throw an Error
+    </Button>
+  );
+};
 
 export default ErrorButton;
