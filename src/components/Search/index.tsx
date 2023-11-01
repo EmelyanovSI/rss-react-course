@@ -53,7 +53,7 @@ class Search extends Component<SearchProps, SearchState> {
         <input
           autoFocus
           aria-label="Search value"
-          className="flex-1 outline-none bg-transparent h-10"
+          className="flex-1 outline-none bg-transparent h-10 select-none"
           name="search"
           type="search"
           placeholder="Search..."

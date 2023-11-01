@@ -18,7 +18,9 @@ class Alert extends Component<AlertProps> {
           'h-10 px-6 bg-red-300'
         )}
       >
-        <span className="material-symbols-outlined">error_outline</span>
+        <span className="material-symbols-outlined select-none">
+          error_outline
+        </span>
         <span>{message}</span>
       </div>
     );

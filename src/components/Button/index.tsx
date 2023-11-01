@@ -18,7 +18,7 @@ class Button extends Component<ButtonProps> {
           'rounded-full whitespace-nowrap',
           'hover:shadow active:shadow-none',
           'transition duration-500 ease-in-out',
-          'bg-red-100 h-10 px-6'
+          'bg-red-100 h-10 px-6 select-none'
         )}
         onClick={onClick}
       >

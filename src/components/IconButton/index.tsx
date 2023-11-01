@@ -22,7 +22,7 @@ class IconButton extends Component<IconButtonProps> {
         onClick={onClick}
         className={classNames(
           'flex justify-center items-center whitespace-nowrap',
-          'rounded-full h-10 w-10',
+          'rounded-full h-10 w-10 select-none',
           'transition duration-500 ease-in-out',
           {
             'hover:bg-gray-100 active:bg-transparent cursor-pointer': !disabled,
