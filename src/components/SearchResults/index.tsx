@@ -46,7 +46,7 @@ class SearchResults extends Component<SearchResultsProps> {
     const { searchResults } = this.props;
 
     if (!searchResults.length) {
-      return <Alert message="No results found." />;
+      return <Alert message="No results found." severity="warning" />;
     }
 
     return (

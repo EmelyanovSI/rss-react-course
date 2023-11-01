@@ -1,25 +1,39 @@
 import classNames from 'classnames';
 import { Component } from 'react';
 
+enum Severity {
+  success = 'success',
+  error = 'error',
+  warning = 'warning',
+  info = 'info',
+}
+
 interface AlertProps {
   message: string;
+  severity: keyof typeof Severity;
 }
 
 class Alert extends Component<AlertProps> {
   render() {
-    const { message } = this.props;
+    const { message, severity } = this.props;
 
     return (
       <div
         className={classNames(
           'flex items-center gap-2',
-          'border rounded-full',
+          'border rounded-full h-10 px-6',
           'transition duration-500 ease-in-out hover:shadow',
-          'h-10 px-6 bg-red-300'
+          { 'bg-green-100 text-green-700': severity === Severity.success },
+          { 'bg-red-100 text-red-700': severity === Severity.error },
+          { 'bg-yellow-100 text-yellow-700': severity === Severity.warning },
+          { 'bg-blue-100 text-blue-700': severity === Severity.info }
         )}
       >
         <span className="material-symbols-outlined select-none">
-          error_outline
+          {severity === Severity.success && 'check_circle'}
+          {severity === Severity.error && 'error_outline'}
+          {severity === Severity.warning && 'warning'}
+          {severity === Severity.info && 'info'}
         </span>
         <span>{message}</span>
       </div>

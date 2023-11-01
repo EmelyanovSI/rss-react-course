@@ -20,7 +20,7 @@ class Content extends Component<ContentProps> {
       case Status.Failed:
         return (
           <div className="flex justify-center p-6">
-            <Alert message={message} />
+            <Alert message={message} severity="error" />
           </div>
         );
       default:
