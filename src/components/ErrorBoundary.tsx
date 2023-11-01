@@ -1,6 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
-import Alert from '../Alert';
-import Button from '../Button';
+import Alert from './Alert';
+import Button from './Button';
 
 interface ErrorBoundaryProps {
   children: ReactNode;

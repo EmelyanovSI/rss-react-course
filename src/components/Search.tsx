@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ChangeEvent, FC, useRef, useState } from 'react';
-import IconButton from '../IconButton';
+import IconButton from './IconButton';
 
 interface SearchProps {
   value: string;

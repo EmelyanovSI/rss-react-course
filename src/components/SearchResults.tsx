@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Animal } from '../../interfaces/Animal';
-import Alert from '../Alert';
-import Card from '../Card';
+import { Animal } from '../interfaces/Animal';
+import Alert from './Alert';
+import Card from './Card';
 
 interface SearchResultsProps {
   results: Animal[];

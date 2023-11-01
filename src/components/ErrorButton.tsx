@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import Button from '../Button';
+import Button from './Button';
 
 const ErrorButton: FC = () => {
   const [hasError, setHasError] = useState(false);
