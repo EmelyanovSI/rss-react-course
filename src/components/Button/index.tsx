@@ -3,12 +3,13 @@ import { Component, ReactNode } from 'react';
 
 interface ButtonProps {
   children: ReactNode;
+  icon: string;
   onClick: () => void;
 }
 
 class Button extends Component<ButtonProps> {
   render() {
-    const { children, onClick } = this.props;
+    const { children, icon, onClick } = this.props;
 
     return (
       <button
@@ -28,7 +29,7 @@ class Button extends Component<ButtonProps> {
             '-ml-2 text-base cursor-pointer'
           )}
         >
-          report
+          {icon}
         </span>
         <label className="cursor-pointer">{children}</label>
       </button>
