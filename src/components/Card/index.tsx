@@ -1,5 +1,5 @@
+import classNames from 'classnames';
 import { Component, ReactNode } from 'react';
-import './index.css';
 
 interface CardProps {
   children: ReactNode;
@@ -11,8 +11,15 @@ class Card extends Component<CardProps> {
     const { title, children } = this.props;
 
     return (
-      <div className="card">
-        <h2>{title}</h2>
+      <div
+        className={classNames(
+          'flex flex-col place-content-between',
+          'transition duration-500 ease-in-out',
+          'border rounded-lg hover:shadow-md hover:text-red-500',
+          'bg-red-50 w-64 p-2 gap-6'
+        )}
+      >
+        <h2 className="font-medium text-black">{title}</h2>
         {children}
       </div>
     );

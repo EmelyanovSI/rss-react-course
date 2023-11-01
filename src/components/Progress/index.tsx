@@ -1,11 +1,10 @@
 import { Component } from 'react';
-import './index.css';
 
 class Progress extends Component {
   render() {
     return (
-      <div className="progress-container">
-        <div className="progress-bar" />
+      <div className="h-1 bg-red-100">
+        <div className="h-full bg-red-300 animate-progress"></div>
       </div>
     );
   }

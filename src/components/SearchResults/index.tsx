@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { Animal } from '../../interfaces/Animal';
 import Alert from '../Alert';
 import Card from '../Card';
-import './index.css';
 
 interface SearchResultsProps {
   searchResults: Animal[];
@@ -34,7 +33,9 @@ class SearchResults extends Component<SearchResultsProps> {
       <Card key={animal.uid} title={animal.name}>
         <ul>
           {this.renderAnimalFeatures(animal).map((feature) => (
-            <li key={feature}>{feature}</li>
+            <li key={feature} className="font-thin text-sm">
+              {feature}
+            </li>
           ))}
         </ul>
       </Card>
@@ -48,7 +49,11 @@ class SearchResults extends Component<SearchResultsProps> {
       return <Alert message="No results found." />;
     }
 
-    return <div className="result">{this.renderCards()}</div>;
+    return (
+      <div className="flex flex-wrap justify-center gap-4">
+        {this.renderCards()}
+      </div>
+    );
   }
 }
 

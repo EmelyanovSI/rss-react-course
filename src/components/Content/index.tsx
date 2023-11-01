@@ -3,7 +3,6 @@ import { Status } from '../../constants/enums';
 import { Loading } from '../../interfaces/Loading';
 import Alert from '../Alert';
 import Progress from '../Progress';
-import './index.css';
 
 interface ContentProps extends Loading {
   children: ReactNode;
@@ -20,12 +19,12 @@ class Content extends Component<ContentProps> {
         return <Progress />;
       case Status.Failed:
         return (
-          <div className="content">
+          <div className="flex justify-center p-6">
             <Alert message={message} />
           </div>
         );
       default:
-        return <div className="content">{children}</div>;
+        return <div className="flex justify-center p-6">{children}</div>;
     }
   }
 

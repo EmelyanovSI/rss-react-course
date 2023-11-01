@@ -27,7 +27,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
   render() {
     if (this.state.hasError) {
-      return <Alert message="Something went wrong. Please refresh the page." />;
+      return (
+        <div className="flex justify-center p-6">
+          <Alert message="Something went wrong. Please refresh the page." />
+        </div>
+      );
     }
 
     return this.props.children;

@@ -1,5 +1,5 @@
+import classNames from 'classnames';
 import { Component } from 'react';
-import './index.css';
 
 interface AlertProps {
   message: string;
@@ -10,8 +10,15 @@ class Alert extends Component<AlertProps> {
     const { message } = this.props;
 
     return (
-      <div className="error">
-        <span className="material-icons">error_outline</span>
+      <div
+        className={classNames(
+          'flex items-center gap-2',
+          'border rounded-full',
+          'transition duration-500 ease-in-out hover:shadow',
+          'h-10 px-6 bg-red-300'
+        )}
+      >
+        <span className="material-symbols-outlined">error_outline</span>
         <span>{message}</span>
       </div>
     );

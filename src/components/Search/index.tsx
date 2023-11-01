@@ -1,78 +1,75 @@
 import classNames from 'classnames';
-import { ChangeEvent, Component } from 'react';
-import './index.css';
+import { ChangeEvent, Component, createRef } from 'react';
+import IconButton from '../IconButton';
 
 interface SearchProps {
   value: string;
-  onBack: () => void;
-  onSearch: () => void;
+  onSearch: (searchValue: string) => void;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface SearchState {
-  open: boolean;
+  value: string;
 }
 
 class Search extends Component<SearchProps, SearchState> {
+  inputRef = createRef<HTMLInputElement>();
+
   constructor(props: SearchProps) {
     super(props);
     this.state = {
-      open: false,
+      value: this.props.value,
     };
   }
 
-  handleFocus = () => {
-    this.setState({ open: true });
-  };
-
-  handleBack = () => {
-    this.props.onBack();
-    this.setState({ open: false });
+  handleClear = () => {
+    this.setState({ value: '' });
+    this.inputRef.current?.focus();
   };
 
   handleSearch = () => {
-    this.props.onSearch();
-    this.setState({ open: false });
+    const trimmedSearchValue = this.state.value.trim();
+    if (this.props.value !== trimmedSearchValue) {
+      this.props.onSearch(trimmedSearchValue);
+    }
+  };
+
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    this.setState({ value: event.target.value });
   };
 
   render() {
-    const searchBar = classNames('search-bar', {
-      'focus-within': this.state.open,
-    });
-    const backButton = classNames('back-button', {
-      visible: this.state.open,
-    });
+    const { value } = this.state;
 
     return (
-      <div className={searchBar}>
-        <button
-          aria-label="Back"
-          title="Back"
-          type="button"
-          className={backButton}
-          onClick={this.handleBack}
-        >
-          <span className="material-icons">arrow_back</span>
-        </button>
+      <div
+        className={classNames(
+          'flex items-center gap-1 rounded-full border',
+          'focus-within:shadow focus-within:w-96 focus-within:bg-transparent',
+          'transition-all duration-500 hover:shadow',
+          'bg-gray-100 pl-3 w-72'
+        )}
+      >
         <input
+          autoFocus
           aria-label="Search value"
-          className="search-input"
+          className="flex-1 outline-none bg-transparent h-10"
           name="search"
           type="search"
           placeholder="Search..."
-          value={this.props.value}
-          onChange={this.props.onChange}
-          onFocus={this.handleFocus}
+          ref={this.inputRef}
+          value={value}
+          onChange={this.handleChange}
         />
-        <button
-          aria-label="Search"
+        {value && (
+          <IconButton name="close" title="Clear" onClick={this.handleClear} />
+        )}
+        <IconButton
+          name="search"
           title="Search"
-          type="button"
-          className="search-button"
+          disabled={this.props.value === value.trim()}
           onClick={this.handleSearch}
-        >
-          <span className="material-icons">search</span>
-        </button>
+        />
       </div>
     );
   }

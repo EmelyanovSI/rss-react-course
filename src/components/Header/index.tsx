@@ -1,5 +1,5 @@
+import classNames from 'classnames';
 import { Component, ReactNode } from 'react';
-import './index.css';
 
 interface HeaderProps {
   children: ReactNode;
@@ -7,7 +7,16 @@ interface HeaderProps {
 
 class Header extends Component<HeaderProps> {
   render() {
-    return <div className="header">{this.props.children}</div>;
+    return (
+      <div
+        className={classNames(
+          'flex justify-between items-center border-b bg-white',
+          'px-6 py-2 gap-6 sticky top-0'
+        )}
+      >
+        {this.props.children}
+      </div>
+    );
   }
 }
 

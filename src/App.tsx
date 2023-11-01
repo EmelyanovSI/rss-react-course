@@ -47,17 +47,10 @@ class App extends Component<object, AppState> {
       });
   };
 
-  handleBack = () => {
-    this.setState({ searchValue: getSearchValue() });
-  };
-
-  handleSearch = () => {
-    const trimmedSearchValue = this.state.searchValue.trim();
-    const previousSearchValue = getSearchValue();
-    if (previousSearchValue !== trimmedSearchValue) {
-      setSearchValue(trimmedSearchValue);
-      this.fetchData(trimmedSearchValue);
-    }
+  handleSearch = (searchValue: string) => {
+    setSearchValue(searchValue);
+    this.setState({ searchValue });
+    this.fetchData(searchValue);
   };
 
   handleSearchValueChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +66,6 @@ class App extends Component<object, AppState> {
           <ErrorButton />
           <Search
             value={searchValue}
-            onBack={this.handleBack}
             onSearch={this.handleSearch}
             onChange={this.handleSearchValueChange}
           />

@@ -25,7 +25,7 @@ class ErrorButton extends Component<object, ErrorBoundaryState> {
   }
 
   render() {
-    return <Button onClick={this.handleThrowError}>Throw Error</Button>;
+    return <Button onClick={this.handleThrowError}>Throw an Error</Button>;
   }
 }
 
