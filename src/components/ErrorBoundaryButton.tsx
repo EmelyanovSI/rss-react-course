@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import Button from './Button';
 
-const ErrorButton: FC = () => {
+const ErrorBoundaryButton: FC = () => {
   const [hasError, setHasError] = useState(false);
 
   const triggerError = () => {
@@ -25,4 +25,4 @@ const ErrorButton: FC = () => {
   );
 };
 
-export default ErrorButton;
+export default ErrorBoundaryButton;

@@ -9,7 +9,7 @@ import { Animal } from './interfaces/Animal';
 import { fetchPage } from './services/Animal';
 import { getSearchValue, setSearchValue } from './utils';
 
-const App: FC = () => {
+const Root: FC = () => {
   const [value, setValue] = useState<string>(getSearchValue());
   const [results, setResults] = useState<Animal[]>([]);
   const [status, setStatus] = useState<Status>(Status.Idle);
@@ -55,4 +55,4 @@ const App: FC = () => {
   );
 };
 
-export default App;
+export default Root;
