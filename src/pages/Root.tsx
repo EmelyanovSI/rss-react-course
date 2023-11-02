@@ -1,13 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import Content from './components/Content';
-import ErrorButton from './components/ErrorButton';
-import Header from './components/Header';
-import Search from './components/Search';
-import SearchResults from './components/SearchResults';
-import { Status } from './constants/enums';
-import { Animal } from './interfaces/Animal';
-import { fetchPage } from './services/Animal';
-import { getSearchValue, setSearchValue } from './utils';
+import Content from '../components/Content';
+import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundaryButton from '../components/ErrorBoundaryButton';
+import Header from '../components/Header';
+import Search from '../components/Search';
+import SearchResults from '../components/SearchResults';
+import { Status } from '../constants/enums';
+import { Animal } from '../interfaces/Animal';
+import { fetchPage } from '../services/Animal';
+import { getSearchValue, setSearchValue } from '../utils';
 
 const Root: FC = () => {
   const [value, setValue] = useState<string>(getSearchValue());
@@ -43,15 +44,15 @@ const Root: FC = () => {
   };
 
   return (
-    <>
+    <ErrorBoundary>
       <Header>
-        <ErrorButton />
+        <ErrorBoundaryButton />
         <Search value={value} onSearch={handleSearch} />
       </Header>
       <Content {...{ status, message }}>
         <SearchResults results={results} />
       </Content>
-    </>
+    </ErrorBoundary>
   );
 };
 

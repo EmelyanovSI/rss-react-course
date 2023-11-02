@@ -1,15 +1,22 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import ErrorBoundary from './components/ErrorBoundary';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
+import ErrorPage from './pages/ErrorPage.tsx';
+import Root from './pages/Root';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    errorElement: <ErrorPage />,
+  },
+]);
 
 const rootElement = document.getElementById('root');
 
 ReactDOM.createRoot(rootElement!).render(
   <StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
+    <RouterProvider router={router} />
   </StrictMode>
 );
