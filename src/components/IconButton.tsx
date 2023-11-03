@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 
 interface IconButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   name: string;
   title: string;
   disabled?: boolean;
