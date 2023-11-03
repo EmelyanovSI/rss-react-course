@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import ErrorPage from './pages/ErrorPage.tsx';
+import ErrorPage from './pages/ErrorPage';
 import Root from './pages/Root';
 
 const router = createBrowserRouter([
