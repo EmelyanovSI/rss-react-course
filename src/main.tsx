@@ -15,6 +15,7 @@ import CardPage from './pages/CardPage';
 import ErrorPage from './pages/ErrorPage';
 import ListLayout from './pages/ListLayout';
 import List from './pages/ListPage';
+import NotFoundPage from './pages/NotFoundPage';
 import RootLayout from './pages/RootLayout';
 import { fetchAnimal, fetchPage } from './services/Animal';
 import { getSearchValue, setSearchValue } from './utils';
@@ -85,6 +86,7 @@ const router = createBrowserRouter(
       <Route path=":search/page" element={<ListLayout />}>
         {renderRoutes()}
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Route>
   )
 );
