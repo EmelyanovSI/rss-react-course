@@ -7,14 +7,14 @@ interface NavProps {
 
 const Nav: FC<NavProps> = ({ children }) => {
   return (
-    <div
+    <nav
       className={classNames(
         'flex justify-end items-center bg-white',
         'px-6 py-2 gap-6 sticky top-0'
       )}
     >
       {children}
-    </div>
+    </nav>
   );
 };
 
