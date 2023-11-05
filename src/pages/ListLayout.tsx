@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import {
+  generatePath,
   Outlet,
   useNavigate,
   useNavigation,
@@ -10,13 +11,29 @@ import Pagination from '../components/Pagination';
 import Progress from '../components/Progress';
 
 const ListLayout: FC = () => {
-  const { number } = useParams();
+  const { number = 1, uid = '' } = useParams();
   const [first, setFirst] = useState(true);
   const [last, setLast] = useState(true);
   const navigate = useNavigate();
-  const navigation = useNavigation();
+  const { state } = useNavigation();
 
-  if (navigation.state === 'loading') {
+  const navigateTo = (number: string) => {
+    const to = generatePath(':number/:uid', {
+      number,
+      uid,
+    });
+    navigate(to);
+  };
+
+  const handlePrevClick = () => {
+    navigateTo(`${+number - 1}`);
+  };
+
+  const handleNextClick = () => {
+    navigateTo(`${+number + 1}`);
+  };
+
+  if (state === 'loading') {
     return <Progress />;
   }
 
@@ -24,10 +41,9 @@ const ListLayout: FC = () => {
     <>
       <Nav>
         <Pagination
-          first={first}
-          last={last}
-          onPrevClick={() => navigate(`${+number! - 1}`)}
-          onNextClick={() => navigate(`${+number! + 1}`)}
+          {...{ first, last }}
+          onPrevClick={handlePrevClick}
+          onNextClick={handleNextClick}
         />
       </Nav>
       <Outlet context={{ setFirst, setLast }} />
