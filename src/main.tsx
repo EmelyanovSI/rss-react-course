@@ -24,7 +24,13 @@ const listLoader = async ({
 }: {
   params: Params;
 }): Promise<AnimalPageResponse> => {
-  return await fetchPage(params.search, +params.number! - 1);
+  const result = await fetchPage(params.search, +params.number! - 1);
+
+  if (!result.ok) {
+    throw Error('Could not find animals');
+  }
+
+  return result.json();
 };
 
 const cardLoader = async ({
@@ -32,7 +38,13 @@ const cardLoader = async ({
 }: {
   params: Params;
 }): Promise<AnimalResponse> => {
-  return await fetchAnimal(params.uid!);
+  const result = await fetchAnimal(params.uid!);
+
+  if (!result.ok) {
+    throw Error('Could not find more info');
+  }
+
+  return result.json();
 };
 
 const searchValue = getSearchValue();
@@ -40,9 +52,19 @@ const searchValue = getSearchValue();
 const renderRoutes = () => (
   <>
     <Route index element={<Navigate to="1" replace />} />
-    <Route path=":number" element={<List />} loader={listLoader}>
+    <Route
+      path=":number"
+      element={<List />}
+      errorElement={<ErrorPage />}
+      loader={listLoader}
+    >
       <Route path=":uid" element={<CardLayout />}>
-        <Route index element={<CardPage />} loader={cardLoader} />
+        <Route
+          index
+          element={<CardPage />}
+          errorElement={<ErrorPage />}
+          loader={cardLoader}
+        />
       </Route>
     </Route>
   </>
