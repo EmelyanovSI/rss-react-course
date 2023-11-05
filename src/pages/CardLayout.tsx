@@ -4,6 +4,11 @@ import IconButton from '../components/IconButton';
 
 const CardLayout: FC = () => {
   const navigate = useNavigate();
+
+  const handleClose = () => {
+    navigate('..', { relative: 'path' });
+  };
+
   return (
     <aside className="flex flex-col rounded-xl bg-gray-100 h-full p-4">
       <div className="flex justify-between">
@@ -12,7 +17,7 @@ const CardLayout: FC = () => {
           className="hover:bg-red-100"
           name="close"
           title="Close"
-          onClick={() => navigate('..', { relative: 'path' })}
+          onClick={handleClose}
         />
       </div>
       <Outlet />

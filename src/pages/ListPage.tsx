@@ -21,6 +21,10 @@ const ListPage: FC = () => {
   } = useLoaderData() as AnimalPageResponse;
   const navigate = useNavigate();
 
+  const handleClose = () => {
+    navigate('..', { relative: 'path' });
+  };
+
   useEffect(() => {
     setFirst(firstPage);
     setLast(lastPage);
@@ -29,10 +33,7 @@ const ListPage: FC = () => {
   if (uid) {
     return (
       <div className="flex">
-        <div
-          className="cursor-pointer w-1/2"
-          onClick={() => navigate('..', { relative: 'path' })}
-        >
+        <div className="cursor-pointer w-1/2" onClick={handleClose}>
           <CardList list={animals} />
         </div>
         <div className="w-1/2 p-6">
