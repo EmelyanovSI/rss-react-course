@@ -6,6 +6,7 @@ interface IconButtonProps {
   name: string;
   title: string;
   disabled?: boolean;
+  className?: string;
 }
 
 const IconButton: FC<IconButtonProps> = ({
@@ -13,6 +14,7 @@ const IconButton: FC<IconButtonProps> = ({
   title,
   disabled = false,
   onClick,
+  className,
 }) => {
   return (
     <button
@@ -23,6 +25,7 @@ const IconButton: FC<IconButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
       className={classNames(
+        className,
         'flex justify-center items-center whitespace-nowrap',
         'rounded-full h-10 w-10 select-none',
         'transition duration-500 ease-in-out',
