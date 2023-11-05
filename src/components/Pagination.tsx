@@ -1,7 +1,19 @@
 import classNames from 'classnames';
 import { FC } from 'react';
 
-const Pagination: FC = () => {
+interface PaginationProps {
+  first?: boolean;
+  last?: boolean;
+  onPrevClick?: () => void;
+  onNextClick?: () => void;
+}
+
+const Pagination: FC<PaginationProps> = ({
+  first = true,
+  last = true,
+  onPrevClick,
+  onNextClick,
+}) => {
   const buttonClasses = classNames(
     'flex items-center gap-1',
     'border whitespace-nowrap',
@@ -11,38 +23,46 @@ const Pagination: FC = () => {
   );
   const iconClasses = classNames('material-symbols-outlined', 'text-base');
 
-  const disableClasses = classNames({
-    'bg-gray-100 hover:shadow-none cursor-not-allowed': false,
-    'cursor-pointer': true,
-  });
-
-  const handlePrevClick = () => {
-    // handlePrevClick
-  };
-
-  const handleNextClick = () => {
-    // handleNextClick
+  const disableClasses = (disabled: boolean) => {
+    return classNames({
+      'bg-gray-100 hover:shadow-none cursor-not-allowed': disabled,
+      'cursor-pointer': !disabled,
+    });
   };
 
   return (
     <div className="flex rounded-full bg-red-100">
       <button
+        disabled={first}
         type="button"
-        className={classNames(buttonClasses, disableClasses, 'rounded-l-full')}
-        onClick={handlePrevClick}
+        className={classNames(
+          buttonClasses,
+          disableClasses(first),
+          'rounded-l-full'
+        )}
+        onClick={onPrevClick}
       >
-        <span className={classNames(iconClasses, disableClasses, '-ml-2')}>
+        <span
+          className={classNames(iconClasses, disableClasses(first), '-ml-2')}
+        >
           arrow_left_alt
         </span>
-        <label className={classNames(disableClasses)}>Prev</label>
+        <label className={disableClasses(first)}>Prev</label>
       </button>
       <button
+        disabled={last}
         type="button"
-        className={classNames(buttonClasses, disableClasses, 'rounded-r-full')}
-        onClick={handleNextClick}
+        className={classNames(
+          buttonClasses,
+          disableClasses(last),
+          'rounded-r-full'
+        )}
+        onClick={onNextClick}
       >
-        <label className={classNames(disableClasses)}>Next</label>
-        <span className={classNames(iconClasses, disableClasses, '-mr-2')}>
+        <label className={disableClasses(last)}>Next</label>
+        <span
+          className={classNames(iconClasses, disableClasses(last), '-mr-2')}
+        >
           arrow_right_alt
         </span>
       </button>
