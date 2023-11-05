@@ -17,6 +17,7 @@ import ListLayout from './pages/ListLayout';
 import List from './pages/ListPage';
 import RootLayout from './pages/RootLayout';
 import { fetchAnimal, fetchPage } from './services/Animal';
+import { getSearchValue, setSearchValue } from './utils';
 
 const listLoader = async ({
   params,
@@ -34,6 +35,8 @@ const cardLoader = async ({
   return await fetchAnimal(params.uid!);
 };
 
+const searchValue = getSearchValue();
+
 const renderRoutes = () => (
   <>
     <Route index element={<Navigate to="1" replace />} />
@@ -47,10 +50,16 @@ const renderRoutes = () => (
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
+    <Route
+      path="/"
+      element={<RootLayout {...{ searchValue, setSearchValue }} />}
+      errorElement={<ErrorPage />}
+    >
+      <Route index element={<Navigate to={`${searchValue}/page`} replace />} />
       <Route path="page" element={<ListLayout />}>
         {renderRoutes()}
       </Route>
+      <Route path=":search" element={<Navigate to="page" replace />} />
       <Route path=":search/page" element={<ListLayout />}>
         {renderRoutes()}
       </Route>

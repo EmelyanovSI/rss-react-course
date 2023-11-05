@@ -1,29 +1,41 @@
 import { FC, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { generatePath, Outlet, useNavigate, useParams } from 'react-router-dom';
 import ErrorBoundary from '../components/ErrorBoundary';
 import ErrorBoundaryButton from '../components/ErrorBoundaryButton';
 import Header from '../components/Header';
 import Search from '../components/Search';
-import { getSearchValue, setSearchValue } from '../utils';
 
-const RootLayout: FC = () => {
-  const value = getSearchValue();
+interface RootLayoutProps {
+  searchValue: string;
+  setSearchValue: (searchValue?: string) => void;
+}
+
+const RootLayout: FC<RootLayoutProps> = ({ searchValue, setSearchValue }) => {
+  const { search, uid = '' } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(`${value}/page`);
-  }, [navigate, value]);
+    setSearchValue(search);
+  }, [search, setSearchValue]);
+
+  const navigateTo = (search: string) => {
+    const to = generatePath(':search/page/:number/:uid', {
+      search,
+      number: '1',
+      uid,
+    });
+    navigate(to);
+  };
 
   const handleSearch = (searchValue: string) => {
-    setSearchValue(searchValue);
-    navigate(`${searchValue}/page`);
+    navigateTo(searchValue);
   };
 
   return (
     <ErrorBoundary>
       <Header>
         <ErrorBoundaryButton />
-        <Search value={value} onSearch={handleSearch} />
+        <Search value={search ?? searchValue} onSearch={handleSearch} />
       </Header>
       <Outlet />
     </ErrorBoundary>
