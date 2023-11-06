@@ -1,20 +1,20 @@
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import {
   Outlet,
   useLoaderData,
   useNavigate,
   useOutletContext,
   useParams,
+  useSearchParams,
 } from 'react-router-dom';
 import CardList from '@/components/CardList';
+import { ListContext, RouterParams } from '@/constants';
 import { AnimalPageResponse } from '@/interfaces/animal';
 
 const ListPage: FC = () => {
-  const { uid } = useParams();
-  const { setFirst, setLast } = useOutletContext<{
-    setFirst: Dispatch<SetStateAction<boolean>>;
-    setLast: Dispatch<SetStateAction<boolean>>;
-  }>();
+  const { details } = useParams<RouterParams>();
+  const [searchParams] = useSearchParams();
+  const { setFirst, setLast } = useOutletContext<ListContext>();
   const {
     page: { firstPage, lastPage },
     animals,
@@ -22,7 +22,13 @@ const ListPage: FC = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate('..', { relative: 'path' });
+    navigate(
+      {
+        pathname: '..',
+        search: `${searchParams}`,
+      },
+      { relative: 'path' }
+    );
   };
 
   useEffect(() => {
@@ -30,14 +36,14 @@ const ListPage: FC = () => {
     setLast(lastPage);
   }, [firstPage, lastPage, setFirst, setLast]);
 
-  if (uid) {
+  if (details) {
     return (
       <div className="flex">
         <div className="cursor-pointer w-1/2" onClick={handleClose}>
           <CardList list={animals} />
         </div>
         <div className="w-1/2 p-6">
-          <Outlet />
+          <Outlet context={{ handleClose }} />
         </div>
       </div>
     );
