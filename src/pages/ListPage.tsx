@@ -7,7 +7,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import CardList from '../components/CardList';
-import { AnimalPageResponse } from '../interfaces/Animal';
+import { AnimalPageResponse } from '../interfaces/animal';
 
 const ListPage: FC = () => {
   const { uid } = useParams();
