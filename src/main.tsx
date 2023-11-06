@@ -10,13 +10,13 @@ import {
 } from 'react-router-dom';
 import './index.css';
 import { AnimalPageResponse, AnimalResponse } from './interfaces/Animal';
-import CardLayout from './pages/CardLayout';
+import CardLayout from './layouts/CardLayout';
+import ListLayout from './layouts/ListLayout';
+import RootLayout from './layouts/RootLayout';
 import CardPage from './pages/CardPage';
 import ErrorPage from './pages/ErrorPage';
-import ListLayout from './pages/ListLayout';
 import List from './pages/ListPage';
 import NotFoundPage from './pages/NotFoundPage';
-import RootLayout from './pages/RootLayout';
 import { fetchAnimal, fetchPage } from './services/Animal';
 import { getSearchValue, setSearchValue } from './utils';
 

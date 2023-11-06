@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react';
 import { generatePath, Outlet, useNavigate, useParams } from 'react-router-dom';
+import Search from '../components/common/Search';
 import ErrorBoundary from '../components/ErrorBoundary';
 import ErrorBoundaryButton from '../components/ErrorBoundaryButton';
 import Header from '../components/Header';
-import Search from '../components/Search';
 
 interface RootLayoutProps {
   searchValue: string;

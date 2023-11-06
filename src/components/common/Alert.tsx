@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Severity } from '../constants/enums';
+import { Severity } from '../../constants/enums';
 
 interface AlertProps {
   message: string;

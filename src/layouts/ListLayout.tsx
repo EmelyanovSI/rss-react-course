@@ -6,9 +6,9 @@ import {
   useNavigation,
   useParams,
 } from 'react-router-dom';
+import Pagination from '../components/common/Pagination';
+import Progress from '../components/common/Progress';
 import Nav from '../components/Nav';
-import Pagination from '../components/Pagination';
-import Progress from '../components/Progress';
 
 const ListLayout: FC = () => {
   const { number = 1, uid = '' } = useParams();

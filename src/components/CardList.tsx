@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Animal } from '../interfaces/Animal';
-import Alert from './Alert';
-import Card from './Card';
+import Alert from './common/Alert';
+import Card from './common/Card';
 
 interface CardListProps {
   list: Animal[];

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import IconButton from '../components/IconButton';
+import IconButton from '../components/common/IconButton';
 
 const CardLayout: FC = () => {
   const navigate = useNavigate();
