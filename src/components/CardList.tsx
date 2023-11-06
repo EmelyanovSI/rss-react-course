@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Animal } from '@/interfaces/animal';
 import Alert from './common/Alert';
 import Card from './common/Card';
@@ -10,6 +10,7 @@ interface CardListProps {
 
 const CardList: FC<CardListProps> = ({ list }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const renderAnimalFeatures = ({
     earthAnimal,
@@ -29,6 +30,12 @@ const CardList: FC<CardListProps> = ({ list }) => {
     return features;
   };
 
+  const handleCardClick = (pathname: string) => {
+    return () => {
+      navigate({ pathname, search: `${searchParams}` });
+    };
+  };
+
   if (!list.length) {
     return (
       <div className="flex justify-center p-6 w-full">
@@ -43,7 +50,7 @@ const CardList: FC<CardListProps> = ({ list }) => {
         <Card
           key={animal.uid}
           title={animal.name}
-          onClick={() => navigate(animal.uid)}
+          onClick={handleCardClick(animal.uid)}
         >
           <ul>
             {renderAnimalFeatures(animal).map((feature) => (
