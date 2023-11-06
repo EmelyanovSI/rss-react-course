@@ -1,13 +1,10 @@
 import { FC } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useOutletContext } from 'react-router-dom';
 import IconButton from '@/components/common/IconButton';
+import { CardContext } from '@/constants';
 
 const CardLayout: FC = () => {
-  const navigate = useNavigate();
-
-  const handleClose = () => {
-    navigate('..', { relative: 'path' });
-  };
+  const { handleClose } = useOutletContext<CardContext>();
 
   return (
     <aside className="flex flex-col rounded-xl bg-gray-100 h-full p-4">
