@@ -5,16 +5,16 @@ import {
   Params,
   Route,
 } from 'react-router-dom';
-import { AnimalPageResponse, AnimalResponse } from '../interfaces/animal';
-import CardLayout from '../layouts/CardLayout';
-import ListLayout from '../layouts/ListLayout';
-import RootLayout from '../layouts/RootLayout';
-import CardPage from '../pages/CardPage';
-import ErrorPage from '../pages/ErrorPage';
-import ListPage from '../pages/ListPage';
-import NotFoundPage from '../pages/NotFoundPage';
-import { fetchAnimal, fetchPage } from '../services/animal';
-import { getSearchValue, setSearchValue } from '../utils';
+import { AnimalPageResponse, AnimalResponse } from '@/interfaces/animal';
+import CardLayout from '@/layouts/CardLayout';
+import ListLayout from '@/layouts/ListLayout';
+import RootLayout from '@/layouts/RootLayout';
+import CardPage from '@/pages/CardPage';
+import ErrorPage from '@/pages/ErrorPage';
+import ListPage from '@/pages/ListPage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import { fetchAnimal, fetchPage } from '@/services/animal';
+import { getSearchValue, setSearchValue } from '@/utils';
 
 const listLoader = async ({
   params,

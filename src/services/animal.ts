@@ -1,4 +1,4 @@
-import { VITE_BASE_URL } from '../constants';
+import { VITE_BASE_URL } from '@/constants';
 
 export async function fetchPage(
   searchValue: string = '',

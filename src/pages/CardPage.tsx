@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { AnimalResponse } from '../interfaces/animal';
+import { AnimalResponse } from '@/interfaces/animal';
 
 const CardPage = () => {
   const {
