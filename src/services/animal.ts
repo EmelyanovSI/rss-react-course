@@ -2,8 +2,8 @@ import { VITE_BASE_URL } from '@/constants';
 
 export async function fetchPage(
   searchValue: string = '',
-  pageNumber = 0,
-  pageSize = 100
+  pageNumber: string | number = 0,
+  pageSize: string | number = 100
 ) {
   const apiUrl = `${VITE_BASE_URL}/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
   const requestBody = new URLSearchParams();
@@ -20,7 +20,7 @@ export async function fetchPage(
   return fetch(apiUrl, requestOptions);
 }
 
-export async function fetchAnimal(uid: string) {
+export async function fetchAnimal(uid = '') {
   const apiUrl = `${VITE_BASE_URL}/animal?uid=${uid}`;
 
   const requestOptions = {
