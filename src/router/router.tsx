@@ -5,6 +5,7 @@ import {
   Params,
   Route,
 } from 'react-router-dom';
+import { RouterParams } from '@/constants';
 import { AnimalPageResponse, AnimalResponse } from '@/interfaces/animal';
 import CardLayout from '@/layouts/CardLayout';
 import ListLayout from '@/layouts/ListLayout';
@@ -14,14 +15,18 @@ import ErrorPage from '@/pages/ErrorPage';
 import ListPage from '@/pages/ListPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { fetchAnimal, fetchPage } from '@/services/animal';
-import { getSearchValue, setSearchValue } from '@/utils';
+import { getSearchFromStorage } from '@/utils';
 
 const listLoader = async ({
   params,
+  request,
 }: {
-  params: Params;
+  params: Params<RouterParams>;
+  request: Request;
 }): Promise<AnimalPageResponse> => {
-  const result = await fetchPage(params.search, +params.number! - 1);
+  const search =
+    new URL(request.url).searchParams.get('search') ?? getSearchFromStorage();
+  const result = await fetchPage(search, Number(params.page) - 1, params.limit);
 
   if (!result.ok) {
     throw Error('Could not find animals');
@@ -33,9 +38,9 @@ const listLoader = async ({
 const cardLoader = async ({
   params,
 }: {
-  params: Params;
+  params: Params<RouterParams>;
 }): Promise<AnimalResponse> => {
-  const result = await fetchAnimal(params.uid!);
+  const result = await fetchAnimal(params.details);
 
   if (!result.ok) {
     throw Error('Could not find more info');
@@ -44,43 +49,29 @@ const cardLoader = async ({
   return result.json();
 };
 
-const searchValue = getSearchValue();
-
-const renderRoutes = () => (
-  <>
-    <Route index element={<Navigate to="1" replace />} />
-    <Route
-      path=":number"
-      element={<ListPage />}
-      errorElement={<ErrorPage />}
-      loader={listLoader}
-    >
-      <Route path=":uid" element={<CardLayout />}>
-        <Route
-          index
-          element={<CardPage />}
-          errorElement={<ErrorPage />}
-          loader={cardLoader}
-        />
-      </Route>
-    </Route>
-  </>
-);
-
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route
-      path="/"
-      element={<RootLayout {...{ searchValue, setSearchValue }} />}
-      errorElement={<ErrorPage />}
-    >
-      <Route index element={<Navigate to={`${searchValue}/page`} replace />} />
-      <Route path="page" element={<ListLayout />}>
-        {renderRoutes()}
-      </Route>
-      <Route path=":search" element={<Navigate to="page" replace />} />
-      <Route path=":search/page" element={<ListLayout />}>
-        {renderRoutes()}
+    <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
+      <Route index element={<Navigate to="page" replace />} />
+      <Route path="page" element={<Navigate to="1" replace />} />
+      <Route path="page/:page" element={<ListLayout />}>
+        <Route index element={<Navigate to="limit" replace />} />
+        <Route path="limit" element={<Navigate to="10" replace />} />
+        <Route
+          path="limit/:limit"
+          element={<ListPage />}
+          errorElement={<ErrorPage />}
+          loader={listLoader}
+        >
+          <Route path=":details" element={<CardLayout />}>
+            <Route
+              index
+              element={<CardPage />}
+              errorElement={<ErrorPage />}
+              loader={cardLoader}
+            />
+          </Route>
+        </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Route>
