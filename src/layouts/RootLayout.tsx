@@ -1,3 +1,4 @@
+import Logo from '@/components/common/Logo';
 import Search from '@/components/common/Search';
 import ErrorBoundaryButton from '@/components/ErrorBoundaryButton';
 import Header from '@/components/Header';
@@ -47,7 +48,10 @@ const RootLayout: FC = () => {
   return (
     <>
       <Header>
-        <ErrorBoundaryButton />
+        <div className="flex gap-6">
+          <Logo />
+          <ErrorBoundaryButton />
+        </div>
         <Search value={getSearchFromStorage()} onSearch={handleSearch} />
       </Header>
       <Outlet />
