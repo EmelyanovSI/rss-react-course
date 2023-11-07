@@ -1,10 +1,3 @@
-import { FC } from 'react';
-import {
-  Outlet,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
 import Search from '@/components/common/Search';
 import ErrorBoundaryButton from '@/components/ErrorBoundaryButton';
 import Header from '@/components/Header';
@@ -14,6 +7,13 @@ import {
   getSearchFromStorage,
   setSearchFromStorage,
 } from '@/utils';
+import { FC } from 'react';
+import {
+  Outlet,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 const RootLayout: FC = () => {
   const { limit = '10', details = '' } = useParams<RouterParams>();

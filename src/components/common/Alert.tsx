@@ -1,6 +1,6 @@
+import { Severity } from '@/constants';
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Severity } from '@/constants';
 
 interface AlertProps {
   message: string;

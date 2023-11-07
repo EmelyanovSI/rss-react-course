@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import { Outlet, useOutletContext } from 'react-router-dom';
 import IconButton from '@/components/common/IconButton';
 import { CardContext } from '@/constants';
+import { FC } from 'react';
+import { Outlet, useOutletContext } from 'react-router-dom';
 
 const CardLayout: FC = () => {
   const { handleClose } = useOutletContext<CardContext>();

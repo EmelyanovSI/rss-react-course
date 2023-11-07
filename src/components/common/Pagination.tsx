@@ -1,6 +1,6 @@
+import { Page } from '@/interfaces/animal';
 import classNames from 'classnames';
 import { ChangeEvent, FC } from 'react';
-import { Page } from '@/interfaces/animal';
 
 interface PaginationProps {
   page: Page;

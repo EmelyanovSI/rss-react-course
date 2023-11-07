@@ -1,6 +1,6 @@
+import { Animal } from '@/interfaces/animal';
 import { FC } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Animal } from '@/interfaces/animal';
 import Alert from './common/Alert';
 import Card from './common/Card';
 

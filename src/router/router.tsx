@@ -1,10 +1,3 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Navigate,
-  Params,
-  Route,
-} from 'react-router-dom';
 import { RouterParams } from '@/constants';
 import { AnimalPageResponse, AnimalResponse } from '@/interfaces/animal';
 import CardLayout from '@/layouts/CardLayout';
@@ -16,6 +9,13 @@ import ListPage from '@/pages/ListPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { fetchAnimal, fetchPage } from '@/services/animal';
 import { getSearchFromStorage } from '@/utils';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Params,
+  Route,
+} from 'react-router-dom';
 
 const listLoader = async ({
   params,

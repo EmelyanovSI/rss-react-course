@@ -1,3 +1,6 @@
+import CardList from '@/components/CardList';
+import { ListContext, RouterParams } from '@/constants';
+import { AnimalPageResponse } from '@/interfaces/animal';
 import { FC, useEffect } from 'react';
 import {
   Outlet,
@@ -7,9 +10,6 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import CardList from '@/components/CardList';
-import { ListContext, RouterParams } from '@/constants';
-import { AnimalPageResponse } from '@/interfaces/animal';
 
 const ListPage: FC = () => {
   const { details } = useParams<RouterParams>();

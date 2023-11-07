@@ -1,6 +1,6 @@
-import { Link, useRouteError } from 'react-router-dom';
 import Alert from '@/components/common/Alert';
 import Button from '@/components/common/Button';
+import { Link, useRouteError } from 'react-router-dom';
 
 const ErrorPage = () => {
   const error = useRouteError() as Error;

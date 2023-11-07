@@ -1,4 +1,9 @@
-import { Page } from '@/interfaces/animal.ts';
+import Pagination from '@/components/common/Pagination';
+import Progress from '@/components/common/Progress';
+import Nav from '@/components/Nav';
+import { RouterParams } from '@/constants';
+import { Page } from '@/interfaces/animal';
+import { getOriginalPath } from '@/utils';
 import { FC, useState } from 'react';
 import {
   Outlet,
@@ -7,11 +12,6 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
-import Pagination from '@/components/common/Pagination';
-import Progress from '@/components/common/Progress';
-import Nav from '@/components/Nav';
-import { RouterParams } from '@/constants';
-import { getOriginalPath } from '@/utils';
 
 const ListLayout: FC = () => {
   const { page = '1', limit = '10', details = '' } = useParams<RouterParams>();
