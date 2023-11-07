@@ -1,6 +1,7 @@
+import { RouterParams } from '@/constants';
 import { Animal } from '@/interfaces/animal';
 import { FC } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Alert from './common/Alert';
 import Card from './common/Card';
 
@@ -10,6 +11,7 @@ interface CardListProps {
 
 const CardList: FC<CardListProps> = ({ list }) => {
   const navigate = useNavigate();
+  const { details } = useParams<RouterParams>();
   const [searchParams] = useSearchParams();
 
   const renderAnimalFeatures = ({
@@ -31,9 +33,11 @@ const CardList: FC<CardListProps> = ({ list }) => {
   };
 
   const handleCardClick = (pathname: string) => {
-    return () => {
-      navigate({ pathname, search: `${searchParams}` });
-    };
+    if (!details) {
+      return () => {
+        navigate({ pathname, search: `${searchParams}` });
+      };
+    }
   };
 
   if (!list.length) {
