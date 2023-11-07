@@ -1,6 +1,7 @@
 import CardList from '@/components/CardList';
 import { ListContext, RouterParams } from '@/constants';
 import { AnimalPageResponse } from '@/interfaces/animal';
+import classNames from 'classnames';
 import { FC, useEffect } from 'react';
 import {
   Outlet,
@@ -19,35 +20,42 @@ const ListPage: FC = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate(
-      {
-        pathname: '..',
-        search: `${searchParams}`,
-      },
-      { relative: 'path' }
-    );
+    if (details) {
+      navigate(
+        {
+          pathname: '..',
+          search: `${searchParams}`,
+        },
+        { relative: 'path' }
+      );
+    }
   };
 
   useEffect(() => {
     setPagination(page);
   }, [page, setPagination]);
 
-  if (details) {
-    return (
-      <div className="flex">
-        <div className="cursor-pointer w-1/2" onClick={handleClose}>
-          <CardList list={animals} />
-        </div>
-        <div className="w-1/2 p-6">
-          <Outlet context={{ handleClose }} />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex">
-      <CardList list={animals} />
+    <div className={classNames({ flex: details })}>
+      <div
+        className={classNames(
+          'transition-all duration-500 ease-in-out',
+          { 'w-full': !details },
+          { 'cursor-pointer w-2/3': details }
+        )}
+        onClick={handleClose}
+      >
+        <CardList list={animals} />
+      </div>
+      <div
+        className={classNames(
+          'transition-all duration-500 ease-in-out',
+          { 'w-0': !details },
+          { 'w-1/3 p-6': details }
+        )}
+      >
+        <Outlet context={{ handleClose }} />
+      </div>
     </div>
   );
 };
