@@ -51,7 +51,7 @@ const ListPage: FC = () => {
         className={classNames(
           'transition-all duration-500 ease-in-out',
           { 'w-0': !details },
-          { 'w-1/3 p-6': details }
+          { 'min-w-fit w-1/3 p-6': details }
         )}
       >
         <Outlet context={{ handleClose }} />
