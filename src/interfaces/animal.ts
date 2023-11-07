@@ -8,17 +8,19 @@ export interface Animal {
   feline: boolean;
 }
 
+export interface Page {
+  firstPage: boolean;
+  lastPage: boolean;
+  numberOfElements: number;
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+}
+
 export interface AnimalPageResponse {
   animals: Animal[];
-  page: {
-    firstPage: boolean;
-    lastPage: boolean;
-    numberOfElements: number;
-    pageNumber: number;
-    pageSize: number;
-    totalElements: number;
-    totalPages: number;
-  };
+  page: Page;
   sort: {
     clauses: [];
   };

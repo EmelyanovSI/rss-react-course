@@ -14,11 +14,8 @@ import { AnimalPageResponse } from '@/interfaces/animal';
 const ListPage: FC = () => {
   const { details } = useParams<RouterParams>();
   const [searchParams] = useSearchParams();
-  const { setFirst, setLast } = useOutletContext<ListContext>();
-  const {
-    page: { firstPage, lastPage },
-    animals,
-  } = useLoaderData() as AnimalPageResponse;
+  const { setPagination } = useOutletContext<ListContext>();
+  const { page, animals } = useLoaderData() as AnimalPageResponse;
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -32,9 +29,8 @@ const ListPage: FC = () => {
   };
 
   useEffect(() => {
-    setFirst(firstPage);
-    setLast(lastPage);
-  }, [firstPage, lastPage, setFirst, setLast]);
+    setPagination(page);
+  }, [page, setPagination]);
 
   if (details) {
     return (

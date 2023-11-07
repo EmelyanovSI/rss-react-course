@@ -1,3 +1,4 @@
+import { Page } from '@/interfaces/animal.ts';
 import { FC, useState } from 'react';
 import {
   Outlet,
@@ -15,8 +16,7 @@ import { getOriginalPath } from '@/utils';
 const ListLayout: FC = () => {
   const { page = '1', limit = '10', details = '' } = useParams<RouterParams>();
   const [searchParams] = useSearchParams();
-  const [first, setFirst] = useState(true);
-  const [last, setLast] = useState(true);
+  const [pagination, setPagination] = useState<Page>();
   const navigate = useNavigate();
   const { state } = useNavigation();
 
@@ -33,6 +33,10 @@ const ListLayout: FC = () => {
     navigateTo(`${+page + 1}`);
   };
 
+  const handlePageChange = (page: number) => {
+    navigateTo(`${page}`);
+  };
+
   if (state === 'loading') {
     return <Progress />;
   }
@@ -40,13 +44,16 @@ const ListLayout: FC = () => {
   return (
     <>
       <Nav>
-        <Pagination
-          {...{ first, last }}
-          onPrevClick={handlePrevClick}
-          onNextClick={handleNextClick}
-        />
+        {pagination && (
+          <Pagination
+            page={pagination}
+            onPrevClick={handlePrevClick}
+            onNextClick={handleNextClick}
+            onPageChange={handlePageChange}
+          />
+        )}
       </Nav>
-      <Outlet context={{ setFirst, setLast }} />
+      <Outlet context={{ setPagination }} />
     </>
   );
 };
