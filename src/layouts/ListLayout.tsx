@@ -20,8 +20,8 @@ const ListLayout: FC = () => {
   const navigate = useNavigate();
   const { state } = useNavigation();
 
-  const navigateTo = (newPage: string) => {
-    const pathname = getOriginalPath(limit, details, newPage);
+  const navigateTo = (newPage: string = page, newLimit: string = limit) => {
+    const pathname = getOriginalPath(newLimit, details, newPage);
     navigate({ pathname, search: `${searchParams}` });
   };
 
@@ -37,6 +37,10 @@ const ListLayout: FC = () => {
     navigateTo(`${page}`);
   };
 
+  const handlePageSizeChange = (newLimit: number) => {
+    navigateTo('1', `${newLimit}`);
+  };
+
   if (state === 'loading') {
     return <Progress />;
   }
@@ -50,6 +54,7 @@ const ListLayout: FC = () => {
             onPrevClick={handlePrevClick}
             onNextClick={handleNextClick}
             onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
           />
         )}
       </Nav>

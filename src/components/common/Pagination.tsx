@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { Page } from '@/interfaces/animal';
 
 interface PaginationProps {
@@ -7,6 +7,7 @@ interface PaginationProps {
   onPrevClick?: () => void;
   onNextClick?: () => void;
   onPageChange?: (page: number) => void;
+  onPageSizeChange?: (pageSize: number) => void;
 }
 
 const Pagination: FC<PaginationProps> = ({
@@ -14,8 +15,9 @@ const Pagination: FC<PaginationProps> = ({
   onPrevClick,
   onNextClick,
   onPageChange,
+  onPageSizeChange,
 }) => {
-  const { firstPage, lastPage, pageNumber, totalPages } = page;
+  const { firstPage, lastPage, pageNumber, totalPages, pageSize } = page;
 
   const buttonClasses = classNames(
     'flex items-center gap-1',
@@ -117,49 +119,78 @@ const Pagination: FC<PaginationProps> = ({
     return pageNumbers;
   };
 
+  const handlePageSizeChange = (newPageSize: number) => {
+    if (onPageSizeChange) {
+      onPageSizeChange(newPageSize);
+    }
+  };
+
+  const handlePageSizeOptionChange = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    const newPageSize = parseInt(event.target.value, 10);
+    handlePageSizeChange(newPageSize);
+  };
+
   return (
-    <div className="flex rounded-full bg-red-100">
-      <button
-        disabled={firstPage}
-        type="button"
-        className={classNames(
-          buttonClasses,
-          disableClasses(firstPage),
-          'rounded-l-full'
-        )}
-        onClick={onPrevClick}
-      >
-        <span
+    <div className="flex flex-col md:flex-row items-center">
+      <div className="mt-2 md:mt-0 mr-2">
+        <span className="mr-2">Page Size:</span>
+        <select value={pageSize} onChange={handlePageSizeOptionChange}>
+          <option value={10}>10</option>
+          <option value={25}>25</option>
+          <option value={50}>50</option>
+          <option value={100}>100</option>
+        </select>
+      </div>
+
+      <div className="flex rounded-full bg-red-100">
+        <button
+          disabled={firstPage}
+          type="button"
           className={classNames(
-            iconClasses,
+            buttonClasses,
             disableClasses(firstPage),
-            '-ml-2'
+            'rounded-l-full'
           )}
+          onClick={onPrevClick}
         >
-          arrow_left_alt
-        </span>
-        <label className={disableClasses(firstPage)}>Prev</label>
-      </button>
+          <span
+            className={classNames(
+              iconClasses,
+              disableClasses(firstPage),
+              '-ml-2'
+            )}
+          >
+            arrow_left_alt
+          </span>
+          <label className={disableClasses(firstPage)}>Prev</label>
+        </button>
 
-      {renderPageNumbers()}
+        {renderPageNumbers()}
 
-      <button
-        disabled={lastPage}
-        type="button"
-        className={classNames(
-          buttonClasses,
-          disableClasses(lastPage),
-          'rounded-r-full'
-        )}
-        onClick={onNextClick}
-      >
-        <label className={disableClasses(lastPage)}>Next</label>
-        <span
-          className={classNames(iconClasses, disableClasses(lastPage), '-mr-2')}
+        <button
+          disabled={lastPage}
+          type="button"
+          className={classNames(
+            buttonClasses,
+            disableClasses(lastPage),
+            'rounded-r-full'
+          )}
+          onClick={onNextClick}
         >
-          arrow_right_alt
-        </span>
-      </button>
+          <label className={disableClasses(lastPage)}>Next</label>
+          <span
+            className={classNames(
+              iconClasses,
+              disableClasses(lastPage),
+              '-mr-2'
+            )}
+          >
+            arrow_right_alt
+          </span>
+        </button>
+      </div>
     </div>
   );
 };
