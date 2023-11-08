@@ -1,10 +1,12 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Page } from '@/interfaces/animal';
+import { Status } from '@/constants/enums';
+import { Animal } from '@/interfaces/animal';
 
 export type RouterParams = 'page' | 'limit' | 'details';
-export type ListContext = {
-  setPagination: Dispatch<SetStateAction<Page>>;
-};
-export type CardContext = {
+export type CardLayoutContext = {
   handleClose: () => void;
+};
+export type CardPageContext = {
+  animal: Animal;
+  status: Status;
+  message: string;
 };
