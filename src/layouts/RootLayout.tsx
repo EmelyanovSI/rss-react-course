@@ -22,11 +22,15 @@ const RootLayout: FC = () => {
     navigate({ pathname });
   };
 
+  const handleLogo = () => {
+    handleSearch('');
+  };
+
   return (
     <>
       <Header>
         <div className="flex gap-6">
-          <Logo />
+          <Logo onClick={handleLogo} />
           <ErrorBoundaryButton />
         </div>
         <Search value={search} onSearch={handleSearch} />
