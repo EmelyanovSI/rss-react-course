@@ -4,3 +4,10 @@ export enum Severity {
   warning = 'warning',
   info = 'info',
 }
+
+export enum Status {
+  Idle,
+  Loading,
+  Succeeded,
+  Failed,
+}
