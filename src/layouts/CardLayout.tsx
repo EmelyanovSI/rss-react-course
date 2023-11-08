@@ -1,7 +1,8 @@
 import IconButton from '@/components/common/IconButton';
-import { CardLayoutContext, RouterParams, Status } from '@/constants';
+import { Status } from '@/constants';
 import { Animal } from '@/interfaces/animal';
 import { fetchAnimal } from '@/services/animal';
+import { CardLayoutContext, RouterParams } from '@/types';
 import { FC, useEffect, useState } from 'react';
 import { Outlet, useOutletContext, useParams } from 'react-router-dom';
 

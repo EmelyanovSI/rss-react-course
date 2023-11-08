@@ -1,5 +1,6 @@
 import { Status } from '@/constants';
 import { Animal } from '@/interfaces/animal';
+import { Loading } from '@/interfaces/loading';
 import { getSearchFromStorage } from '@/utils';
 
 export enum ACTION_TYPE {
@@ -10,11 +11,9 @@ export enum ACTION_TYPE {
   RESET_LIST = 'RESET_LIST',
 }
 
-export interface AppContextValue {
+export interface AppContextValue extends Loading {
   search: string;
   list: Animal[];
-  status: Status;
-  message: string;
 }
 
 export const defaultValue: AppContextValue = {

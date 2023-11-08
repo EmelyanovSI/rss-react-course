@@ -1,7 +1,8 @@
 import Alert from '@/components/common/Alert';
 import Progress from '@/components/common/Progress';
-import { CardPageContext, Status } from '@/constants';
+import { Status } from '@/constants';
 import { Animal } from '@/interfaces/animal';
+import { CardPageContext } from '@/types';
 import { FC } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
