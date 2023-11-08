@@ -1,28 +1,58 @@
+import Alert from '@/components/common/Alert';
 import Pagination from '@/components/common/Pagination';
 import Progress from '@/components/common/Progress';
 import Nav from '@/components/Nav';
-import { RouterParams } from '@/constants';
+import { RouterParams, Status } from '@/constants';
+import { ACTION_TYPE } from '@/context/actions';
+import { useAppContext, useAppReducer } from '@/context/hooks';
 import { Page } from '@/interfaces/animal';
-import { getOriginalPath } from '@/utils';
-import { FC, useState } from 'react';
+import { fetchPage } from '@/services/animal';
+import { getOriginalPath, setSearchFromStorage } from '@/utils';
+import { FC, useEffect, useState } from 'react';
 import {
   Outlet,
   useNavigate,
-  useNavigation,
   useParams,
   useSearchParams,
 } from 'react-router-dom';
 
 const ListLayout: FC = () => {
   const { page = '1', limit = '10', details = '' } = useParams<RouterParams>();
-  const [searchParams] = useSearchParams();
-  const [pagination, setPagination] = useState<Page>();
+  const [pagination, setPagination] = useState<Page | null>(null);
   const navigate = useNavigate();
-  const { state } = useNavigation();
+  const { search, status, message } = useAppContext();
+  const dispatch = useAppReducer();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (status === Status.Idle) {
+      setPagination(null);
+      dispatch({ type: ACTION_TYPE.GET_LIST_STARTED });
+      const searchParam = searchParams.get('search') ?? search;
+      setSearchFromStorage(searchParam);
+      dispatch({ type: ACTION_TYPE.UPDATE_SEARCH, payload: searchParam });
+      fetchPage(searchParam ?? search, +page - 1, limit)
+        .then((value) => {
+          setPagination(value.page);
+          dispatch({
+            type: ACTION_TYPE.GET_LIST_SUCCESS,
+            payload: value.animals,
+          });
+        })
+        .catch((reason) => {
+          setPagination(null);
+          dispatch({
+            type: ACTION_TYPE.GET_LIST_FAILURE,
+            payload: reason,
+          });
+        });
+    }
+  }, [dispatch, limit, page, search, searchParams, setSearchParams, status]);
 
   const navigateTo = (newPage: string = page, newLimit: string = limit) => {
+    dispatch({ type: ACTION_TYPE.RESET_LIST });
     const pathname = getOriginalPath(newLimit, details, newPage);
-    navigate({ pathname, search: `${searchParams}` });
+    navigate({ pathname });
   };
 
   const handlePrevClick = () => {
@@ -41,8 +71,21 @@ const ListLayout: FC = () => {
     navigateTo('1', `${newLimit}`);
   };
 
-  if (state === 'loading') {
+  if (status === Status.Idle) {
+    return null;
+  }
+
+  if (status === Status.Loading) {
     return <Progress />;
+  }
+
+  if (status === Status.Failed) {
+    return (
+      <div className="flex justify-center p-6 w-full">
+        <Alert message={message} severity="error" />
+        <Outlet />
+      </div>
+    );
   }
 
   return (
@@ -58,7 +101,7 @@ const ListLayout: FC = () => {
           />
         )}
       </Nav>
-      <Outlet context={{ setPagination }} />
+      <Outlet />
     </>
   );
 };

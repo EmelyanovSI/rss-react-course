@@ -1,39 +1,20 @@
 import CardList from '@/components/CardList';
-import { ListContext, RouterParams } from '@/constants';
-import { AnimalPageResponse } from '@/interfaces/animal';
+import { RouterParams } from '@/constants';
+import { useAppContext } from '@/context/hooks';
 import classNames from 'classnames';
-import { FC, useEffect } from 'react';
-import {
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useOutletContext,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { FC } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 const ListPage: FC = () => {
   const { details } = useParams<RouterParams>();
-  const [searchParams] = useSearchParams();
-  const { setPagination } = useOutletContext<ListContext>();
-  const { page, animals } = useLoaderData() as AnimalPageResponse;
   const navigate = useNavigate();
+  const { list } = useAppContext();
 
   const handleClose = () => {
     if (details) {
-      navigate(
-        {
-          pathname: '..',
-          search: `${searchParams}`,
-        },
-        { relative: 'path' }
-      );
+      navigate({ pathname: '..' }, { relative: 'path' });
     }
   };
-
-  useEffect(() => {
-    setPagination(page);
-  }, [page, setPagination]);
 
   return (
     <div className={classNames({ flex: details })}>
@@ -45,7 +26,7 @@ const ListPage: FC = () => {
         )}
         onClick={handleClose}
       >
-        <CardList list={animals} />
+        <CardList list={list} />
       </div>
       <div
         className={classNames(
