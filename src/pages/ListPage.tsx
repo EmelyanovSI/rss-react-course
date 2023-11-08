@@ -1,6 +1,6 @@
 import CardList from '@/components/CardList';
-import { RouterParams } from '@/constants';
 import { useAppContext } from '@/context/hooks';
+import { RouterParams } from '@/types';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';

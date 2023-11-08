@@ -2,11 +2,12 @@ import Alert from '@/components/common/Alert';
 import Pagination from '@/components/common/Pagination';
 import Progress from '@/components/common/Progress';
 import Nav from '@/components/Nav';
-import { RouterParams, Status } from '@/constants';
+import { Status } from '@/constants';
 import { ACTION_TYPE } from '@/context/actions';
 import { useAppContext, useAppReducer } from '@/context/hooks';
 import { Page } from '@/interfaces/animal';
 import { fetchPage } from '@/services/animal';
+import { RouterParams } from '@/types';
 import { getOriginalPath, setSearchFromStorage } from '@/utils';
 import { FC, useEffect, useState } from 'react';
 import {

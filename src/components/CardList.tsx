@@ -1,5 +1,5 @@
-import { RouterParams } from '@/constants';
 import { Animal } from '@/interfaces/animal';
+import { RouterParams } from '@/types';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Alert from './common/Alert';
