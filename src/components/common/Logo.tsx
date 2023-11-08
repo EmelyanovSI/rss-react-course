@@ -1,4 +1,4 @@
-import vite from '@/../public/vite.svg';
+import vite from '@/assets/vite.svg';
 import { FC } from 'react';
 
 const Logo: FC = () => {
