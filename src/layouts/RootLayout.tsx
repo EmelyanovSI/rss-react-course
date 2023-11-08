@@ -3,47 +3,24 @@ import Search from '@/components/common/Search';
 import ErrorBoundaryButton from '@/components/ErrorBoundaryButton';
 import Header from '@/components/Header';
 import { RouterParams } from '@/constants';
-import {
-  getOriginalPath,
-  getSearchFromStorage,
-  setSearchFromStorage,
-} from '@/utils';
+import { ACTION_TYPE } from '@/context/actions';
+import { useAppContext, useAppReducer } from '@/context/hooks';
+import { getOriginalPath } from '@/utils';
 import { FC } from 'react';
-import {
-  Outlet,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 const RootLayout: FC = () => {
+  const { search } = useAppContext();
+  const dispatch = useAppReducer();
   const { limit = '10', details = '' } = useParams<RouterParams>();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const getSearchParam = () => {
-    return searchParams.get('search') ?? '';
-  };
-
-  const setSearchParam = (search?: string) => {
-    if (search) {
-      searchParams.set('search', search);
-    } else {
-      searchParams.delete('search');
-    }
-  };
-
-  const handleSearch = (search: string) => {
-    setSearchParam(search);
-    setSearchFromStorage(search);
+  const handleSearch = (newSearch: string) => {
+    dispatch({ type: ACTION_TYPE.RESET_LIST });
+    dispatch({ type: ACTION_TYPE.UPDATE_SEARCH, payload: newSearch });
     const pathname = getOriginalPath(limit, details);
-    navigate({ pathname, search: `${searchParams}` });
+    navigate({ pathname });
   };
-
-  const search = getSearchParam();
-  if (search) {
-    setSearchFromStorage(search);
-  }
 
   return (
     <>
@@ -52,7 +29,7 @@ const RootLayout: FC = () => {
           <Logo />
           <ErrorBoundaryButton />
         </div>
-        <Search value={getSearchFromStorage()} onSearch={handleSearch} />
+        <Search value={search} onSearch={handleSearch} />
       </Header>
       <Outlet />
     </>
