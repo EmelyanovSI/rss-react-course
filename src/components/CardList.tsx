@@ -41,7 +41,7 @@ const CardList: FC<CardListProps> = ({ list }) => {
 
   if (!list.length) {
     return (
-      <div className="flex justify-center p-6 w-full">
+      <div className="flex justify-center p-6">
         <Alert message="Not found." severity="warning" />
       </div>
     );
