@@ -136,7 +136,11 @@ const Pagination: FC<PaginationProps> = ({
     <div className="flex flex-col md:flex-row items-center">
       <div className="mt-2 md:mt-0 mr-2">
         <span className="mr-2">Page Size:</span>
-        <select value={pageSize} onChange={handlePageSizeOptionChange}>
+        <select
+          name="size"
+          value={pageSize}
+          onChange={handlePageSizeOptionChange}
+        >
           <option value={10}>10</option>
           <option value={25}>25</option>
           <option value={50}>50</option>
@@ -164,7 +168,7 @@ const Pagination: FC<PaginationProps> = ({
           >
             arrow_left_alt
           </span>
-          <label className={disableClasses(firstPage)}>Prev</label>
+          <span className={disableClasses(firstPage)}>Prev</span>
         </button>
 
         {renderPageNumbers()}
@@ -179,7 +183,7 @@ const Pagination: FC<PaginationProps> = ({
           )}
           onClick={onNextClick}
         >
-          <label className={disableClasses(lastPage)}>Next</label>
+          <span className={disableClasses(lastPage)}>Next</span>
           <span
             className={classNames(
               iconClasses,
