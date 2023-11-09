@@ -28,10 +28,16 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
+    "vite.config.ts",
     "src"
   ],
   "references": [
