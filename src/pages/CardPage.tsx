@@ -38,7 +38,7 @@ const CardPage: FC = () => {
 
     if (status === Status.Failed) {
       return (
-        <div className="flex justify-center p-6 w-full">
+        <div className="flex justify-center p-6">
           <Alert message={message} severity="error" />
         </div>
       );
