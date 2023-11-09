@@ -16,7 +16,6 @@ const RootLayout: FC = () => {
   const navigate = useNavigate();
 
   const handleSearch = (newSearch: string) => {
-    dispatch({ type: ACTION_TYPE.RESET_LIST });
     dispatch({ type: ACTION_TYPE.UPDATE_SEARCH, payload: newSearch });
     const pathname = getOriginalPath(limit, details);
     navigate({ pathname });

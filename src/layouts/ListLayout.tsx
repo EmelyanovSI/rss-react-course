@@ -3,55 +3,20 @@ import Pagination from '@/components/common/Pagination';
 import Progress from '@/components/common/Progress';
 import Nav from '@/components/Nav';
 import { Status } from '@/constants';
-import { ACTION_TYPE } from '@/context/actions';
-import { useAppContext, useAppReducer } from '@/context/hooks';
-import { Page } from '@/interfaces/animal';
-import { fetchPage } from '@/services/animal';
+import { useAppContext } from '@/context/hooks';
+import useFetch from '@/hooks/useFetch';
 import { RouterParams } from '@/types';
-import { getOriginalPath, setSearchFromStorage } from '@/utils';
-import { FC, useEffect, useState } from 'react';
-import {
-  Outlet,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { getOriginalPath } from '@/utils';
+import { FC } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 const ListLayout: FC = () => {
   const { page = '1', limit = '10', details = '' } = useParams<RouterParams>();
-  const [pagination, setPagination] = useState<Page | null>(null);
+  const { status, message } = useAppContext();
   const navigate = useNavigate();
-  const { search, status, message } = useAppContext();
-  const dispatch = useAppReducer();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    if (status === Status.Idle) {
-      setPagination(null);
-      dispatch({ type: ACTION_TYPE.GET_LIST_STARTED });
-      const searchParam = searchParams.get('search') ?? search;
-      setSearchFromStorage(searchParam);
-      dispatch({ type: ACTION_TYPE.UPDATE_SEARCH, payload: searchParam });
-      fetchPage(searchParam ?? search, +page - 1, limit)
-        .then((value) => {
-          setPagination(value.page);
-          dispatch({
-            type: ACTION_TYPE.GET_LIST_SUCCESS,
-            payload: value.animals,
-          });
-        })
-        .catch((reason) => {
-          setPagination(null);
-          dispatch({
-            type: ACTION_TYPE.GET_LIST_FAILURE,
-            payload: reason,
-          });
-        });
-    }
-  }, [dispatch, limit, page, search, searchParams, setSearchParams, status]);
+  const pagination = useFetch();
 
   const navigateTo = (newPage: string = page, newLimit: string = limit) => {
-    dispatch({ type: ACTION_TYPE.RESET_LIST });
     const pathname = getOriginalPath(newLimit, details, newPage);
     navigate({ pathname });
   };
@@ -82,9 +47,8 @@ const ListLayout: FC = () => {
 
   if (status === Status.Failed) {
     return (
-      <div className="flex justify-center p-6 w-full">
+      <div className="flex justify-center p-6">
         <Alert message={message} severity="error" />
-        <Outlet />
       </div>
     );
   }
@@ -92,15 +56,13 @@ const ListLayout: FC = () => {
   return (
     <>
       <Nav>
-        {pagination && (
-          <Pagination
-            page={pagination}
-            onPrevClick={handlePrevClick}
-            onNextClick={handleNextClick}
-            onPageChange={handlePageChange}
-            onPageSizeChange={handlePageSizeChange}
-          />
-        )}
+        <Pagination
+          page={pagination}
+          onPrevClick={handlePrevClick}
+          onNextClick={handleNextClick}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </Nav>
       <Outlet />
     </>
