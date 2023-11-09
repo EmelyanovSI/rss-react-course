@@ -20,11 +20,7 @@ export async function fetchPage(
 
   const response = await fetch(apiUrl, requestOptions);
 
-  if (response.ok) {
-    return await response.json();
-  } else {
-    throw new Error('Failed to fetch data');
-  }
+  return response.json();
 }
 
 export async function fetchAnimal(uid: string = ''): Promise<AnimalResponse> {
@@ -39,9 +35,5 @@ export async function fetchAnimal(uid: string = ''): Promise<AnimalResponse> {
 
   const response = await fetch(apiUrl, requestOptions);
 
-  if (response.ok) {
-    return await response.json();
-  } else {
-    throw new Error('Failed to fetch data');
-  }
+  return response.json();
 }
