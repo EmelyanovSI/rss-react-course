@@ -1,18 +1,14 @@
 import { Animal } from '@/interfaces/animal';
-import { RouterParams } from '@/types';
 import { FC } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import Alert from './common/Alert';
 import Card from './common/Card';
 
 interface CardListProps {
   list: Animal[];
+  onCardClick?: (pathname: string) => (() => void) | undefined;
 }
 
-const CardList: FC<CardListProps> = ({ list }) => {
-  const navigate = useNavigate();
-  const { details } = useParams<RouterParams>();
-
+const CardList: FC<CardListProps> = ({ list, onCardClick }) => {
   const renderAnimalFeatures = ({
     earthAnimal,
     avian,
@@ -32,10 +28,8 @@ const CardList: FC<CardListProps> = ({ list }) => {
   };
 
   const handleCardClick = (pathname: string) => {
-    if (!details) {
-      return () => {
-        navigate({ pathname });
-      };
+    if (onCardClick) {
+      return onCardClick(pathname);
     }
   };
 

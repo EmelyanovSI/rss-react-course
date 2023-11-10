@@ -16,6 +16,14 @@ const ListPage: FC = () => {
     }
   };
 
+  const handleCardClick = (pathname: string) => {
+    if (!details) {
+      return () => {
+        navigate({ pathname });
+      };
+    }
+  };
+
   return (
     <div className={classNames({ flex: details })}>
       <div
@@ -26,7 +34,7 @@ const ListPage: FC = () => {
         )}
         onClick={handleClose}
       >
-        <CardList list={list} />
+        <CardList list={list} onCardClick={handleCardClick} />
       </div>
       <div
         className={classNames(
