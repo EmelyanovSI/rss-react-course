@@ -137,6 +137,7 @@ const Pagination: FC<PaginationProps> = ({
       <div className="mt-2 md:mt-0 mr-2">
         <span className="mr-2">Page Size:</span>
         <select
+          role="combobox"
           name="size"
           value={pageSize}
           onChange={handlePageSizeOptionChange}

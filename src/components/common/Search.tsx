@@ -35,6 +35,7 @@ const Search: FC<SearchProps> = ({ value, onSearch }) => {
   return (
     <form
       action="#"
+      role="form"
       onSubmit={handleFormSubmit}
       className={classNames(
         'flex items-center gap-1 rounded-full border',
