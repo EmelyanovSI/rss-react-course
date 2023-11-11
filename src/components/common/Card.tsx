@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ title, children, onClick }) => {
   return (
-    <div
+    <article
       className={classNames(
         'flex flex-col place-content-between border rounded-lg',
         'transition duration-500 ease-in-out',
@@ -20,7 +20,7 @@ const Card: FC<CardProps> = ({ title, children, onClick }) => {
     >
       <h2 className="font-medium text-black">{title}</h2>
       {children}
-    </div>
+    </article>
   );
 };
 
