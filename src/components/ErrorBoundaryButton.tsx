@@ -1,12 +1,9 @@
+import { triggerError } from '@/utils';
 import { FC, useEffect, useState } from 'react';
 import Button from './common/Button';
 
 const ErrorBoundaryButton: FC = () => {
   const [hasError, setHasError] = useState(false);
-
-  const triggerError = () => {
-    throw new Error('This is a test error');
-  };
 
   const handleThrowError = () => {
     setHasError(true);

@@ -12,6 +12,10 @@ export function setSearchFromStorage(search?: string) {
   }
 }
 
+export const triggerError = () => {
+  throw new Error('This is a test error');
+};
+
 export function getOriginalPath(limit = '10', details = '', page = '1') {
   const originalPath = '/page/:page/limit/:limit/:details';
   return generatePath(originalPath, {
