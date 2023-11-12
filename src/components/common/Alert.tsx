@@ -11,6 +11,7 @@ const Alert: FC<AlertProps> = ({ message, severity }) => {
   const { success, error, warning, info } = Severity;
   return (
     <div
+      role="alert"
       className={classNames(
         'flex items-center gap-2',
         'border rounded-full h-10 px-6',
