@@ -26,7 +26,7 @@ const RootLayout: FC = () => {
   };
 
   return (
-    <>
+    <div data-testid="root-layout">
       <Header>
         <div className="flex gap-6">
           <Logo onClick={handleLogo} />
@@ -35,7 +35,7 @@ const RootLayout: FC = () => {
         <Search value={search} onSearch={handleSearch} />
       </Header>
       <Outlet />
-    </>
+    </div>
   );
 };
 

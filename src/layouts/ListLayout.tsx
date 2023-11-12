@@ -4,7 +4,7 @@ import Progress from '@/components/common/Progress';
 import Nav from '@/components/Nav';
 import { Status } from '@/constants';
 import { useAppContext } from '@/context/hooks';
-import useFetch from '@/hooks/useFetch';
+import { useFetch } from '@/hooks';
 import { RouterParams } from '@/types';
 import { getOriginalPath } from '@/utils';
 import { FC } from 'react';
@@ -37,36 +37,40 @@ const ListLayout: FC = () => {
     navigateTo('1', `${newLimit}`);
   };
 
-  if (status === Status.Idle) {
-    return null;
-  }
+  const renderContent = () => {
+    if (status === Status.Idle) {
+      return null;
+    }
 
-  if (status === Status.Loading) {
-    return <Progress />;
-  }
+    if (status === Status.Loading) {
+      return <Progress />;
+    }
 
-  if (status === Status.Failed) {
+    if (status === Status.Failed) {
+      return (
+        <div className="flex justify-center p-6">
+          <Alert message={message} severity="error" />
+        </div>
+      );
+    }
+
     return (
-      <div className="flex justify-center p-6">
-        <Alert message={message} severity="error" />
-      </div>
+      <>
+        <Nav>
+          <Pagination
+            page={pagination}
+            onPrevClick={handlePrevClick}
+            onNextClick={handleNextClick}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
+        </Nav>
+        <Outlet />
+      </>
     );
-  }
+  };
 
-  return (
-    <>
-      <Nav>
-        <Pagination
-          page={pagination}
-          onPrevClick={handlePrevClick}
-          onNextClick={handleNextClick}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-        />
-      </Nav>
-      <Outlet />
-    </>
-  );
+  return <div data-testid="list-layout">{renderContent()}</div>;
 };
 
 export default ListLayout;
