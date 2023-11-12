@@ -12,27 +12,27 @@ import {
   Route,
 } from 'react-router-dom';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
-      <Route index element={<Navigate to="page" replace />} />
-      <Route path="page" element={<Navigate to="1" replace />} />
-      <Route path="page/:page" element={<ListLayout />}>
-        <Route index element={<Navigate to="limit" replace />} />
-        <Route path="limit" element={<Navigate to="10" replace />} />
-        <Route
-          path="limit/:limit"
-          element={<ListPage />}
-          errorElement={<ErrorPage />}
-        >
-          <Route path=":details" element={<CardLayout />}>
-            <Route index element={<CardPage />} errorElement={<ErrorPage />} />
-          </Route>
+export const routesConfig = createRoutesFromElements(
+  <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
+    <Route index element={<Navigate to="page" replace />} />
+    <Route path="page" element={<Navigate to="1" replace />} />
+    <Route path="page/:page" element={<ListLayout />}>
+      <Route index element={<Navigate to="limit" replace />} />
+      <Route path="limit" element={<Navigate to="10" replace />} />
+      <Route
+        path="limit/:limit"
+        element={<ListPage />}
+        errorElement={<ErrorPage />}
+      >
+        <Route path=":details" element={<CardLayout />}>
+          <Route index element={<CardPage />} errorElement={<ErrorPage />} />
         </Route>
       </Route>
-      <Route path="*" element={<NotFoundPage />} />
     </Route>
-  )
+    <Route path="*" element={<NotFoundPage />} />
+  </Route>
 );
+
+const router = createBrowserRouter(routesConfig);
 
 export default router;
