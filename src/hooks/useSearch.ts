@@ -4,7 +4,7 @@ import { setSearchFromStorage } from '@/utils';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const useSearch = () => {
+export const useSearch = () => {
   const { search } = useAppContext();
   const dispatch = useAppReducer();
   const [searchParams] = useSearchParams();
@@ -18,5 +18,3 @@ const useSearch = () => {
 
   return search;
 };
-
-export default useSearch;

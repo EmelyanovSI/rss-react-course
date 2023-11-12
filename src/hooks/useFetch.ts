@@ -5,9 +5,9 @@ import { fetchPage } from '@/services/animal';
 import { RouterParams } from '@/types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useSearch from './useSearch';
+import { useSearch } from './useSearch';
 
-const useFetch = () => {
+export const useFetch = () => {
   const { page = '1', limit = '10' } = useParams<RouterParams>();
   const dispatch = useAppReducer();
   const [pagination, setPagination] = useState<Page>({} as Page);
@@ -33,5 +33,3 @@ const useFetch = () => {
 
   return pagination;
 };
-
-export default useFetch;

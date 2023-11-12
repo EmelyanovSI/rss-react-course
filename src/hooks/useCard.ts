@@ -5,7 +5,7 @@ import { RouterParams } from '@/types';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const useCard = () => {
+export const useCard = () => {
   const { details } = useParams<RouterParams>();
   const [animal, setAnimal] = useState<Animal>({} as Animal);
   const [status, setStatus] = useState<Status>(Status.Idle);
@@ -28,5 +28,3 @@ const useCard = () => {
 
   return { animal, status, message };
 };
-
-export default useCard;
