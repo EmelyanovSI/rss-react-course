@@ -2,54 +2,53 @@ import Alert from '@/components/common/Alert';
 import Pagination from '@/components/common/Pagination';
 import Progress from '@/components/common/Progress';
 import Nav from '@/components/Nav';
-import { Status } from '@/constants';
-import { useAppContext } from '@/context/hooks';
-import { useFetch } from '@/hooks';
-import { RouterParams } from '@/types';
-import { getOriginalPath } from '@/utils';
+import { useAppParams, useAppSearchParams } from '@/hooks';
+import { setLimit, useAppDispatch, useGetPageQuery } from '@/redux';
+import { generateAppPath } from '@/utils';
 import { FC } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const ListLayout: FC = () => {
-  const { page = '1', limit = '10', details = '' } = useParams<RouterParams>();
-  const { status, message } = useAppContext();
+  const { page = '1', details } = useAppParams();
+  const { search, limit } = useAppSearchParams();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const pagination = useFetch();
-
-  const navigateTo = (newPage: string = page, newLimit: string = limit) => {
-    const pathname = getOriginalPath(newLimit, details, newPage);
-    navigate({ pathname });
-  };
+  const { data, isError, isLoading, isUninitialized } = useGetPageQuery({
+    search,
+    page,
+    limit,
+  });
 
   const handlePrevClick = () => {
-    navigateTo(`${+page - 1}`);
+    navigate({ pathname: generateAppPath({ page: `${+page - 1}`, details }) });
   };
 
   const handleNextClick = () => {
-    navigateTo(`${+page + 1}`);
+    navigate({ pathname: generateAppPath({ page: `${+page + 1}`, details }) });
   };
 
-  const handlePageChange = (page: number) => {
-    navigateTo(`${page}`);
+  const handlePageChange = (page: string) => {
+    navigate({ pathname: generateAppPath({ page, details }) });
   };
 
-  const handlePageSizeChange = (newLimit: number) => {
-    navigateTo('1', `${newLimit}`);
+  const handlePageSizeChange = (limit: string) => {
+    dispatch(setLimit(limit));
+    navigate({ pathname: generateAppPath({ details }) });
   };
 
   const renderContent = () => {
-    if (status === Status.Idle) {
+    if (isUninitialized) {
       return null;
     }
 
-    if (status === Status.Loading) {
+    if (isLoading) {
       return <Progress />;
     }
 
-    if (status === Status.Failed) {
+    if (isError) {
       return (
         <div className="flex justify-center p-6">
-          <Alert message={message} severity="error" />
+          <Alert message="Something went wrong" severity="error" />
         </div>
       );
     }
@@ -58,14 +57,14 @@ const ListLayout: FC = () => {
       <>
         <Nav>
           <Pagination
-            page={pagination}
+            page={data.page}
             onPrevClick={handlePrevClick}
             onNextClick={handleNextClick}
             onPageChange={handlePageChange}
             onPageSizeChange={handlePageSizeChange}
           />
         </Nav>
-        <Outlet />
+        <Outlet context={{ list: data.animals }} />
       </>
     );
   };

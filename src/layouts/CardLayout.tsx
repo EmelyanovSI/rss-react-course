@@ -1,12 +1,10 @@
 import IconButton from '@/components/common/IconButton';
-import { useCard } from '@/hooks';
 import { CardLayoutContext } from '@/types';
 import { FC } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
 const CardLayout: FC = () => {
   const { handleClose } = useOutletContext<CardLayoutContext>();
-  const { animal, status, message } = useCard();
 
   return (
     <aside
@@ -22,7 +20,7 @@ const CardLayout: FC = () => {
           onClick={handleClose}
         />
       </div>
-      <Outlet context={{ animal, status, message }} />
+      <Outlet />
     </aside>
   );
 };
