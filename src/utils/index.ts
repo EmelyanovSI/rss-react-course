@@ -1,26 +1,12 @@
+import { AppParams } from '@/types';
 import { generatePath } from 'react-router-dom';
-
-export function getSearchFromStorage() {
-  return localStorage.getItem('search') ?? '';
-}
-
-export function setSearchFromStorage(search?: string) {
-  if (search) {
-    localStorage.setItem('search', search);
-  } else {
-    localStorage.removeItem('search');
-  }
-}
 
 export const triggerError = () => {
   throw new Error('This is a test error');
 };
 
-export function getOriginalPath(limit = '10', details = '', page = '1') {
-  const originalPath = '/page/:page/limit/:limit/:details';
-  return generatePath(originalPath, {
-    page,
-    limit,
-    details,
-  });
+export function generateAppPath(params: AppParams = {}) {
+  const { page = '1', details = '' } = params;
+  const originalPath = '/page/:page/:details';
+  return generatePath(originalPath, { page, details });
 }
