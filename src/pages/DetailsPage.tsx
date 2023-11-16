@@ -5,7 +5,7 @@ import { Animal } from '@/interfaces/animal';
 import { useGetAnimalQuery } from '@/redux';
 import { FC } from 'react';
 
-const CardPage: FC = () => {
+const DetailsPage: FC = () => {
   const { details } = useAppParams();
   const { data, isUninitialized, isError, isLoading, isFetching } =
     useGetAnimalQuery(details, { skip: !details });
@@ -55,4 +55,4 @@ const CardPage: FC = () => {
   return <div className="flex flex-col">{renderPage()}</div>;
 };
 
-export default CardPage;
+export default DetailsPage;

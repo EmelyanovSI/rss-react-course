@@ -16,7 +16,7 @@ import { generateAppPath } from '@/utils';
 import { FC } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-const ListLayout: FC = () => {
+const MainLayout: FC = () => {
   const { page = '1', details } = useAppParams();
   const { search, limit } = useAppSearchParams();
   const dispatch = useAppDispatch();
@@ -95,4 +95,4 @@ const ListLayout: FC = () => {
   return <div data-testid="list-layout">{renderContent()}</div>;
 };
 
-export default ListLayout;
+export default MainLayout;

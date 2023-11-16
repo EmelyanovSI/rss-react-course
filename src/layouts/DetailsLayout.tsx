@@ -3,7 +3,7 @@ import { CardLayoutContext } from '@/types';
 import { FC } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
-const CardLayout: FC = () => {
+const DetailsLayout: FC = () => {
   const { handleClose } = useOutletContext<CardLayoutContext>();
 
   return (
@@ -25,4 +25,4 @@ const CardLayout: FC = () => {
   );
 };
 
-export default CardLayout;
+export default DetailsLayout;

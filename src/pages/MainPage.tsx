@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 
-const ListPage: FC = () => {
+const MainPage: FC = () => {
   const { details } = useAppParams();
   const { list } = useOutletContext<ListPageContext>();
   const navigate = useNavigate();
@@ -49,4 +49,4 @@ const ListPage: FC = () => {
   );
 };
 
-export default ListPage;
+export default MainPage;
