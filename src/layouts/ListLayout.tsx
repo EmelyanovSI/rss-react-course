@@ -13,11 +13,12 @@ const ListLayout: FC = () => {
   const { search, limit } = useAppSearchParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { data, isError, isLoading, isUninitialized } = useGetPageQuery({
-    search,
-    page,
-    limit,
-  });
+  const { data, isError, isLoading, isFetching, isUninitialized } =
+    useGetPageQuery({
+      search,
+      page,
+      limit,
+    });
 
   const handlePrevClick = () => {
     navigate({ pathname: generateAppPath({ page: `${+page - 1}`, details }) });
@@ -64,7 +65,11 @@ const ListLayout: FC = () => {
             onPageSizeChange={handlePageSizeChange}
           />
         </Nav>
-        <Outlet context={{ list: data.animals }} />
+        {isFetching ? (
+          <Progress />
+        ) : (
+          <Outlet context={{ list: data.animals }} />
+        )}
       </>
     );
   };

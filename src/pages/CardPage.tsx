@@ -7,10 +7,8 @@ import { FC } from 'react';
 
 const CardPage: FC = () => {
   const { details } = useAppParams();
-  const { data, isUninitialized, isError, isLoading } = useGetAnimalQuery(
-    details,
-    { skip: !details }
-  );
+  const { data, isUninitialized, isError, isLoading, isFetching } =
+    useGetAnimalQuery(details, { skip: !details });
 
   const animalDetails = ({
     name,
@@ -35,7 +33,7 @@ const CardPage: FC = () => {
       return null;
     }
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
       return <Progress />;
     }
 
