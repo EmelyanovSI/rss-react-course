@@ -4,14 +4,16 @@ import { ChangeEvent, FC } from 'react';
 
 interface PaginationProps {
   page: Page;
+  options?: number[];
   onPrevClick?: () => void;
   onNextClick?: () => void;
-  onPageChange?: (page: number) => void;
-  onPageSizeChange?: (pageSize: number) => void;
+  onPageChange?: (page: string) => void;
+  onPageSizeChange?: (limit: string) => void;
 }
 
 const Pagination: FC<PaginationProps> = ({
   page,
+  options = [10, 25, 50, 100],
   onPrevClick,
   onNextClick,
   onPageChange,
@@ -19,6 +21,7 @@ const Pagination: FC<PaginationProps> = ({
 }) => {
   const { firstPage, lastPage, pageNumber, totalPages, pageSize } = page;
 
+  const iconClasses = classNames('material-symbols-outlined', 'text-base');
   const buttonClasses = classNames(
     'flex items-center gap-1',
     'border whitespace-nowrap',
@@ -26,7 +29,6 @@ const Pagination: FC<PaginationProps> = ({
     'transition duration-500 ease-in-out',
     'h-10 px-6 select-none'
   );
-  const iconClasses = classNames('material-symbols-outlined', 'text-base');
 
   const disableClasses = (disabled: boolean) => {
     return classNames({
@@ -37,7 +39,13 @@ const Pagination: FC<PaginationProps> = ({
 
   const handlePageChange = (newPage: number) => {
     if (onPageChange) {
-      onPageChange(newPage);
+      onPageChange(newPage.toString());
+    }
+  };
+
+  const handlePageSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    if (onPageSizeChange) {
+      onPageSizeChange(event.target.value);
     }
   };
 
@@ -119,19 +127,6 @@ const Pagination: FC<PaginationProps> = ({
     return pageNumbers;
   };
 
-  const handlePageSizeChange = (newPageSize: number) => {
-    if (onPageSizeChange) {
-      onPageSizeChange(newPageSize);
-    }
-  };
-
-  const handlePageSizeOptionChange = (
-    event: ChangeEvent<HTMLSelectElement>
-  ) => {
-    const newPageSize = parseInt(event.target.value, 10);
-    handlePageSizeChange(newPageSize);
-  };
-
   return (
     <div className="flex flex-col md:flex-row items-center">
       <div className="mt-2 md:mt-0 mr-2">
@@ -140,12 +135,13 @@ const Pagination: FC<PaginationProps> = ({
           role="combobox"
           name="size"
           value={pageSize}
-          onChange={handlePageSizeOptionChange}
+          onChange={handlePageSizeChange}
         >
-          <option value={10}>10</option>
-          <option value={25}>25</option>
-          <option value={50}>50</option>
-          <option value={100}>100</option>
+          {options.map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
         </select>
       </div>
 
