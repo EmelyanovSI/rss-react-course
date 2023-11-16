@@ -11,3 +11,8 @@ export enum Status {
   Succeeded,
   Failed,
 }
+
+export enum ViewMode {
+  Compact = 'compact',
+  Detailed = 'detailed',
+}

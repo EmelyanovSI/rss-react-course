@@ -1,9 +1,17 @@
 import Alert from '@/components/common/Alert';
+import Checkbox from '@/components/common/Checkbox';
 import Pagination from '@/components/common/Pagination';
 import Progress from '@/components/common/Progress';
 import Nav from '@/components/Nav';
+import { ViewMode } from '@/constants';
 import { useAppParams, useAppSearchParams } from '@/hooks';
-import { setLimit, useAppDispatch, useGetPageQuery } from '@/redux';
+import {
+  setLimit,
+  toggleMode,
+  useAppDispatch,
+  useAppSelector,
+  useGetPageQuery,
+} from '@/redux';
 import { generateAppPath } from '@/utils';
 import { FC } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -13,6 +21,7 @@ const ListLayout: FC = () => {
   const { search, limit } = useAppSearchParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const mode = useAppSelector((state) => state.app.mode);
   const { data, isError, isLoading, isFetching, isUninitialized } =
     useGetPageQuery({
       search,
@@ -37,6 +46,10 @@ const ListLayout: FC = () => {
     navigate({ pathname: generateAppPath({ details }) });
   };
 
+  const handleCheckboxChange = () => {
+    dispatch(toggleMode());
+  };
+
   const renderContent = () => {
     if (isUninitialized) {
       return null;
@@ -57,6 +70,11 @@ const ListLayout: FC = () => {
     return (
       <>
         <Nav>
+          <Checkbox
+            label="Compact"
+            checked={mode === ViewMode.Compact}
+            onChange={handleCheckboxChange}
+          />
           <Pagination
             page={data.page}
             onPrevClick={handlePrevClick}
