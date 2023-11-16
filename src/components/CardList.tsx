@@ -27,9 +27,9 @@ const CardList: FC<CardListProps> = ({ list, onCardClick }) => {
     return features;
   };
 
-  const handleCardClick = (pathname: string) => {
+  const handleClick = (details: string) => {
     if (onCardClick) {
-      return onCardClick(pathname);
+      return onCardClick(details);
     }
   };
 
@@ -42,7 +42,7 @@ const CardList: FC<CardListProps> = ({ list, onCardClick }) => {
       <Card
         key={animal.uid}
         title={animal.name}
-        onClick={handleCardClick(animal.uid)}
+        onClick={handleClick(animal.uid)}
       >
         <ul>
           {renderAnimalFeatures(animal).map((feature) => (
