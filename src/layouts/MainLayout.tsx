@@ -23,11 +23,7 @@ const MainLayout: FC = () => {
   const navigate = useNavigate();
   const mode = useAppSelector((state) => state.app.mode);
   const { data, isError, isLoading, isFetching, isUninitialized } =
-    useGetPageQuery({
-      search,
-      page,
-      limit,
-    });
+    useGetPageQuery({ search, page, limit }, { refetchOnReconnect: true });
 
   const handlePrevClick = () => {
     navigate({ pathname: generateAppPath({ page: `${+page - 1}`, details }) });
