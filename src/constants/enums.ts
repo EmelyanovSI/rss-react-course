@@ -5,13 +5,6 @@ export enum Severity {
   info = 'info',
 }
 
-export enum Status {
-  Idle,
-  Loading,
-  Succeeded,
-  Failed,
-}
-
 export enum ViewMode {
   Compact = 'compact',
   Detailed = 'detailed',
