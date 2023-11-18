@@ -1,6 +1,6 @@
 import { render, screen, userEvent } from '@/utils/test-utils';
 import { MemoryRouter } from 'react-router-dom';
-import CardLayout from './CardLayout';
+import DetailsLayout from './DetailsLayout';
 
 const handleCloseMock = vi.fn();
 
@@ -12,15 +12,15 @@ vi.mock('react-router-dom', async (importOriginal) => {
   };
 });
 
-describe('CardLayout Component', () => {
+describe('DetailsLayout Component', () => {
   it('renders without crashing', () => {
     render(
       <MemoryRouter>
-        <CardLayout />
+        <DetailsLayout />
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('card-layout')).toBeDefined();
+    expect(screen.getByTestId('details-layout')).toBeDefined();
   });
 
   it('handles close button click', async () => {
@@ -28,7 +28,7 @@ describe('CardLayout Component', () => {
 
     render(
       <MemoryRouter>
-        <CardLayout />
+        <DetailsLayout />
       </MemoryRouter>
     );
 
