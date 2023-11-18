@@ -3,7 +3,14 @@ import Search from '@/components/common/Search';
 import ErrorBoundaryButton from '@/components/ErrorBoundaryButton';
 import Header from '@/components/Header';
 import { useAppParams, useAppSearchParams } from '@/hooks';
-import { clearSearch, setSearch, useAppDispatch } from '@/redux';
+import {
+  api,
+  clearSearch,
+  setSearch,
+  useAppDispatch,
+  useAppSelector,
+} from '@/redux';
+import { selectStatus } from '@/redux/statusSlice';
 import { generateAppPath } from '@/utils';
 import { FC } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -13,6 +20,9 @@ const RootLayout: FC = () => {
   const { search } = useAppSearchParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector(
+    selectStatus(api.endpoints.getPage.name)
+  );
 
   const handleSearch = (search: string) => {
     dispatch(setSearch(search));
@@ -31,7 +41,7 @@ const RootLayout: FC = () => {
           <Logo onClick={handleLogo} />
           <ErrorBoundaryButton />
         </div>
-        <Search value={search} onSearch={handleSearch} />
+        <Search value={search} disabled={isLoading} onSearch={handleSearch} />
       </Header>
       <Outlet />
     </div>

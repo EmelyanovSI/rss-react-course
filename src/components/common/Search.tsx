@@ -4,10 +4,11 @@ import IconButton from './IconButton';
 
 interface SearchProps {
   value: string;
+  disabled?: boolean;
   onSearch: (searchValue: string) => void;
 }
 
-const Search: FC<SearchProps> = ({ value, onSearch }) => {
+const Search: FC<SearchProps> = ({ value, disabled, onSearch }) => {
   const [searchValue, setSearchValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,7 +63,7 @@ const Search: FC<SearchProps> = ({ value, onSearch }) => {
       <IconButton
         name="search"
         title="Search"
-        disabled={value === searchValue.trim()}
+        disabled={disabled || value === searchValue.trim()}
         onClick={handleSearch}
       />
     </form>
