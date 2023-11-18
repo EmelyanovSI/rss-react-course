@@ -11,6 +11,15 @@ vi.mock('react-router-dom', async (importOriginal) => {
 });
 
 describe('ErrorPage Component', () => {
+  const originalConsoleError = console.error;
+  beforeAll(() => {
+    console.error = vi.fn();
+  });
+
+  afterAll(() => {
+    console.error = originalConsoleError;
+  });
+
   it('renders the error messages and home button', () => {
     const mockError = new Error('Test Error');
 
