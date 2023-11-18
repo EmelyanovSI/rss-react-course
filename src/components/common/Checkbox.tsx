@@ -25,6 +25,7 @@ const Checkbox: FC<CheckboxProps> = ({ label, checked, onChange }) => {
     >
       <input
         type="checkbox"
+        name={label}
         checked={checked}
         onChange={handleChange}
         className={classNames(
