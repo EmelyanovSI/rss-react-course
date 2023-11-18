@@ -1,4 +1,4 @@
-import { Page } from '@/interfaces/animal.ts';
+import { Page } from '@/interfaces/animal';
 import { useGetAnimalQuery, useGetPageQuery } from '@/redux';
 import { userEvent } from '@/utils/test-utils';
 import { render, screen } from '@testing-library/react';

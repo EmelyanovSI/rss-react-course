@@ -1,5 +1,4 @@
 import { DEV } from '@/constants';
-import statusSlice, { StatusState } from '@/redux/statusSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
@@ -17,6 +16,7 @@ import { PersistPartial } from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
 import { api } from './api';
 import appSlice, { AppState } from './appSlice';
+import statusSlice, { StatusState } from './statusSlice';
 
 interface Reducer<T> {
   app: AppState & T;

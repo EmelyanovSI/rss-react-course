@@ -6,11 +6,11 @@ import { useAppParams, useAppSearchParams } from '@/hooks';
 import {
   api,
   clearSearch,
+  selectStatus,
   setSearch,
   useAppDispatch,
   useAppSelector,
 } from '@/redux';
-import { selectStatus } from '@/redux/statusSlice';
 import { generateAppPath } from '@/utils';
 import { FC } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
