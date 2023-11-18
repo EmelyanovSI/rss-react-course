@@ -1,4 +1,5 @@
 import { DEV } from '@/constants';
+import statusSlice, { StatusState } from '@/redux/statusSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
@@ -19,6 +20,7 @@ import appSlice, { AppState } from './appSlice';
 
 interface Reducer<T> {
   app: AppState & T;
+  status: StatusState;
   [api.reducerPath]: ReturnType<typeof api.reducer>;
 }
 
@@ -27,6 +29,7 @@ const [appPersistor] = [{ key: appSlice.name, storage, blacklist: [] }];
 const store = configureStore({
   reducer: combineReducers<Reducer<PersistPartial>>({
     app: persistReducer<AppState>(appPersistor, appSlice),
+    status: statusSlice,
     [api.reducerPath]: api.reducer,
   }),
   middleware: (getDefaultMiddleware) => {
