@@ -8,7 +8,7 @@ const DetailsLayout: FC = () => {
 
   return (
     <aside
-      data-testid="card-layout"
+      data-testid="details-layout"
       className="flex flex-col rounded-xl bg-gray-100 h-full p-4"
     >
       <div className="flex justify-between">

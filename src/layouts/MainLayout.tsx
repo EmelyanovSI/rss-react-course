@@ -88,7 +88,7 @@ const MainLayout: FC = () => {
     );
   };
 
-  return <div data-testid="list-layout">{renderContent()}</div>;
+  return <div data-testid="main-layout">{renderContent()}</div>;
 };
 
 export default MainLayout;
