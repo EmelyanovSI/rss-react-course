@@ -4,12 +4,12 @@ import { FC } from 'react';
 interface CheckboxProps {
   label: string;
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  onChange: (checked?: boolean) => void;
 }
 
 const Checkbox: FC<CheckboxProps> = ({ label, checked, onChange }) => {
   const handleChange = () => {
-    onChange(!checked);
+    onChange();
   };
 
   return (
