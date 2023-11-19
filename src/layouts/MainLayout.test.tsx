@@ -1,6 +1,6 @@
 import { useAppParams } from '@/hooks';
 import { Page } from '@/interfaces/animal';
-import { useGetPageQuery } from '@/redux';
+import { toggleMode, useGetPageQuery } from '@/redux';
 import { render, screen, userEvent } from '@/utils/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import MainLayout from './MainLayout';
@@ -29,6 +29,7 @@ const mockFlags = {
 };
 
 const navigate = vi.fn();
+const dispatch = vi.fn();
 
 vi.mock('react-router-dom', async (importOriginal) => {
   const mod = await importOriginal<typeof import('react-router-dom')>();
@@ -52,6 +53,8 @@ vi.mock('@/redux', async (importOriginal) => {
   return {
     ...mod,
     useGetPageQuery: vi.fn(),
+    toggleMode: vi.fn(),
+    useAppDispatch: vi.fn(() => dispatch),
   };
 });
 
@@ -152,5 +155,27 @@ describe('MainLayout Component', () => {
 
     await user.selectOptions(screen.getByRole('combobox'), '25');
     expect(navigate).toHaveBeenCalledWith({ pathname: '/page/1' });
+  });
+
+  it('should dispatch toggleMode action when Checkbox is clicked', async () => {
+    const user = userEvent.setup();
+    vi.mocked(useAppParams).mockReturnValue(mockParams);
+    vi.mocked(useGetPageQuery).mockReturnValue({
+      data: { page: mockPagination, animals: [] },
+      ...mockFlags,
+    });
+
+    const { getByLabelText } = render(
+      <MemoryRouter>
+        <MainLayout />
+      </MemoryRouter>
+    );
+
+    const checkbox = getByLabelText('Compact');
+
+    await user.click(checkbox);
+
+    expect(dispatch).toHaveBeenCalled();
+    expect(toggleMode).toHaveBeenCalledTimes(1);
   });
 });
