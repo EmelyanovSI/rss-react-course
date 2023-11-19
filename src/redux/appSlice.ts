@@ -7,7 +7,7 @@ export interface AppState {
   mode: ViewMode;
 }
 
-const initialState: AppState = {
+export const initialState: AppState = {
   search: '',
   limit: '10',
   mode: ViewMode.Detailed,

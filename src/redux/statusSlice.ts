@@ -1,6 +1,6 @@
 import { Status } from '@/constants';
-import { api } from '@/redux/api';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { api } from './api';
 
 type Keys = keyof typeof api.endpoints;
 
