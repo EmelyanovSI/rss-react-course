@@ -1,11 +1,6 @@
-import { cleanup, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ReactElement } from 'react';
-import { afterEach } from 'vitest';
 import Wrapper from './Wrapper';
-
-afterEach(() => {
-  cleanup();
-});
 
 function customRender(ui: ReactElement, options = {}) {
   return render(ui, {
