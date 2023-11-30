@@ -28,7 +28,7 @@ const Button: FC<ButtonProps> = ({ children, icon, onClick }) => {
       >
         {icon}
       </span>
-      <label className="cursor-pointer">{children}</label>
+      <span className="cursor-pointer">{children}</span>
     </button>
   );
 };

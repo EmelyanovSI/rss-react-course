@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ChangeEvent, FC, useRef, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useRef, useState } from 'react';
 import IconButton from './IconButton';
 
 interface SearchProps {
@@ -27,8 +27,16 @@ const Search: FC<SearchProps> = ({ value, onSearch }) => {
     setSearchValue(event.target.value);
   };
 
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleSearch();
+  };
+
   return (
-    <div
+    <form
+      action="#"
+      role="form"
+      onSubmit={handleFormSubmit}
       className={classNames(
         'flex items-center gap-1 rounded-full border',
         'focus-within:shadow focus-within:w-96 focus-within:bg-transparent',
@@ -38,6 +46,7 @@ const Search: FC<SearchProps> = ({ value, onSearch }) => {
     >
       <input
         autoFocus
+        accessKey="f"
         aria-label="Search value"
         className="flex-1 outline-none bg-transparent h-10 select-none"
         name="search"
@@ -56,7 +65,7 @@ const Search: FC<SearchProps> = ({ value, onSearch }) => {
         disabled={value === searchValue.trim()}
         onClick={handleSearch}
       />
-    </div>
+    </form>
   );
 };
 

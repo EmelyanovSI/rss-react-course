@@ -1,6 +1,6 @@
+import { Severity } from '@/constants';
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Severity } from '../constants/enums';
 
 interface AlertProps {
   message: string;
@@ -11,6 +11,7 @@ const Alert: FC<AlertProps> = ({ message, severity }) => {
   const { success, error, warning, info } = Severity;
   return (
     <div
+      role="alert"
       className={classNames(
         'flex items-center gap-2',
         'border rounded-full h-10 px-6',

@@ -1,51 +1,50 @@
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
-import {
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useOutletContext,
-  useParams,
-} from 'react-router-dom';
-import CardList from '../components/CardList';
-import { AnimalPageResponse } from '../interfaces/Animal';
+import CardList from '@/components/CardList';
+import { useAppContext } from '@/context/hooks';
+import { RouterParams } from '@/types';
+import classNames from 'classnames';
+import { FC } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 const ListPage: FC = () => {
-  const { uid } = useParams();
-  const { setFirst, setLast } = useOutletContext<{
-    setFirst: Dispatch<SetStateAction<boolean>>;
-    setLast: Dispatch<SetStateAction<boolean>>;
-  }>();
-  const {
-    page: { firstPage, lastPage },
-    animals,
-  } = useLoaderData() as AnimalPageResponse;
+  const { details } = useParams<RouterParams>();
   const navigate = useNavigate();
+  const { list } = useAppContext();
 
   const handleClose = () => {
-    navigate('..', { relative: 'path' });
+    if (details) {
+      navigate({ pathname: '..' }, { relative: 'path' });
+    }
   };
 
-  useEffect(() => {
-    setFirst(firstPage);
-    setLast(lastPage);
-  }, [firstPage, lastPage, setFirst, setLast]);
-
-  if (uid) {
-    return (
-      <div className="flex">
-        <div className="cursor-pointer w-1/2" onClick={handleClose}>
-          <CardList list={animals} />
-        </div>
-        <div className="w-1/2 p-6">
-          <Outlet />
-        </div>
-      </div>
-    );
-  }
+  const handleCardClick = (pathname: string) => {
+    if (!details) {
+      return () => {
+        navigate({ pathname });
+      };
+    }
+  };
 
   return (
-    <div className="flex">
-      <CardList list={animals} />
+    <div className={classNames({ flex: details })}>
+      <div
+        className={classNames(
+          'transition-all duration-500 ease-in-out',
+          { 'w-full': !details },
+          { 'cursor-pointer w-2/3': details }
+        )}
+        onClick={handleClose}
+      >
+        <CardList list={list} onCardClick={handleCardClick} />
+      </div>
+      <div
+        className={classNames(
+          'transition-all duration-500 ease-in-out',
+          { 'w-0': !details },
+          { 'min-w-fit w-1/3 p-6': details }
+        )}
+      >
+        <Outlet context={{ handleClose }} />
+      </div>
     </div>
   );
 };
