@@ -1,3 +1,4 @@
+import { ViewMode } from '@/constants';
 import { Animal } from '@/interfaces/animal';
 import { FC } from 'react';
 import Alert from './common/Alert';
@@ -5,10 +6,15 @@ import Card from './common/Card';
 
 interface CardListProps {
   list: Animal[];
+  mode?: ViewMode;
   onCardClick?: (pathname: string) => (() => void) | undefined;
 }
 
-const CardList: FC<CardListProps> = ({ list, onCardClick }) => {
+const CardList: FC<CardListProps> = ({
+  list,
+  mode = ViewMode.Detailed,
+  onCardClick,
+}) => {
   const renderAnimalFeatures = ({
     earthAnimal,
     avian,
@@ -27,9 +33,9 @@ const CardList: FC<CardListProps> = ({ list, onCardClick }) => {
     return features;
   };
 
-  const handleCardClick = (pathname: string) => {
+  const handleClick = (details: string) => {
     if (onCardClick) {
-      return onCardClick(pathname);
+      return onCardClick(details);
     }
   };
 
@@ -42,15 +48,17 @@ const CardList: FC<CardListProps> = ({ list, onCardClick }) => {
       <Card
         key={animal.uid}
         title={animal.name}
-        onClick={handleCardClick(animal.uid)}
+        onClick={handleClick(animal.uid)}
       >
-        <ul>
-          {renderAnimalFeatures(animal).map((feature) => (
-            <li key={feature} className="font-thin text-sm">
-              {feature}
-            </li>
-          ))}
-        </ul>
+        {mode === ViewMode.Detailed && (
+          <ul>
+            {renderAnimalFeatures(animal).map((feature) => (
+              <li key={feature} className="font-thin text-sm">
+                {feature}
+              </li>
+            ))}
+          </ul>
+        )}
       </Card>
     ));
   };

@@ -1,16 +1,14 @@
 import IconButton from '@/components/common/IconButton';
-import { useCard } from '@/hooks';
 import { CardLayoutContext } from '@/types';
 import { FC } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
-const CardLayout: FC = () => {
+const DetailsLayout: FC = () => {
   const { handleClose } = useOutletContext<CardLayoutContext>();
-  const { animal, status, message } = useCard();
 
   return (
     <aside
-      data-testid="card-layout"
+      data-testid="details-layout"
       className="flex flex-col rounded-xl bg-gray-100 h-full p-4"
     >
       <div className="flex justify-between">
@@ -22,9 +20,9 @@ const CardLayout: FC = () => {
           onClick={handleClose}
         />
       </div>
-      <Outlet context={{ animal, status, message }} />
+      <Outlet />
     </aside>
   );
 };
 
-export default CardLayout;
+export default DetailsLayout;

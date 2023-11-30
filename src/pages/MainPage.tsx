@@ -1,14 +1,16 @@
 import CardList from '@/components/CardList';
-import { useAppContext } from '@/context/hooks';
-import { RouterParams } from '@/types';
+import { useAppParams } from '@/hooks';
+import { useAppSelector } from '@/redux';
+import { ListPageContext } from '@/types';
 import classNames from 'classnames';
 import { FC } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 
-const ListPage: FC = () => {
-  const { details } = useParams<RouterParams>();
+const MainPage: FC = () => {
+  const { details } = useAppParams();
+  const { list } = useOutletContext<ListPageContext>();
+  const mode = useAppSelector((state) => state.app.mode);
   const navigate = useNavigate();
-  const { list } = useAppContext();
 
   const handleClose = () => {
     if (details) {
@@ -16,7 +18,7 @@ const ListPage: FC = () => {
     }
   };
 
-  const handleCardClick = (pathname: string) => {
+  const handleOpen = (pathname: string) => {
     if (!details) {
       return () => {
         navigate({ pathname });
@@ -34,7 +36,7 @@ const ListPage: FC = () => {
         )}
         onClick={handleClose}
       >
-        <CardList list={list} onCardClick={handleCardClick} />
+        <CardList list={list} mode={mode} onCardClick={handleOpen} />
       </div>
       <div
         className={classNames(
@@ -49,4 +51,4 @@ const ListPage: FC = () => {
   );
 };
 
-export default ListPage;
+export default MainPage;

@@ -1,12 +1,12 @@
 import { Animal } from '@/interfaces/animal';
-import { Loading } from '@/interfaces/loading';
+import { Params } from 'react-router-dom';
 
-export type RouterParams = 'page' | 'limit' | 'details';
+export type AppParams = Partial<Params<'page' | 'details'>>;
 
 export interface CardLayoutContext {
   handleClose: () => void;
 }
 
-export interface CardPageContext extends Loading {
-  animal: Animal;
+export interface ListPageContext {
+  list: Animal[];
 }

@@ -1,13 +1,14 @@
 import Alert from '@/components/common/Alert';
 import Progress from '@/components/common/Progress';
-import { Status } from '@/constants';
+import { useAppParams } from '@/hooks';
 import { Animal } from '@/interfaces/animal';
-import { CardPageContext } from '@/types';
+import { useGetAnimalQuery } from '@/redux';
 import { FC } from 'react';
-import { useOutletContext } from 'react-router-dom';
 
-const CardPage: FC = () => {
-  const { animal, status, message } = useOutletContext<CardPageContext>();
+const DetailsPage: FC = () => {
+  const { details } = useAppParams();
+  const { data, isUninitialized, isError, isLoading, isFetching } =
+    useGetAnimalQuery(details, { skip: !details });
 
   const animalDetails = ({
     name,
@@ -28,23 +29,23 @@ const CardPage: FC = () => {
   ];
 
   const renderPage = () => {
-    if (status === Status.Idle) {
+    if (isUninitialized) {
       return null;
     }
 
-    if (status === Status.Loading) {
+    if (isLoading || isFetching) {
       return <Progress />;
     }
 
-    if (status === Status.Failed) {
+    if (isError) {
       return (
         <div className="flex justify-center p-6">
-          <Alert message={message} severity="error" />
+          <Alert message="Something went wrong" severity="error" />
         </div>
       );
     }
 
-    return animalDetails(animal).map((detail, index) => (
+    return animalDetails(data.animal).map((detail, index) => (
       <div key={index}>
         {detail.label} {detail.value}
       </div>
@@ -54,4 +55,4 @@ const CardPage: FC = () => {
   return <div className="flex flex-col">{renderPage()}</div>;
 };
 
-export default CardPage;
+export default DetailsPage;

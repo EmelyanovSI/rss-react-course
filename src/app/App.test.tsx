@@ -1,27 +1,9 @@
-import { Status } from '@/constants';
-import { useAppContext } from '@/context/hooks.tsx';
-import { fetchAnimal } from '@/services/animal.ts';
-import { userEvent } from '@/utils/test-utils.ts';
+import { Page } from '@/interfaces/animal';
+import { useGetAnimalQuery, useGetPageQuery } from '@/redux';
+import { userEvent } from '@/utils/test-utils';
 import { render, screen } from '@testing-library/react';
 import { expect } from 'vitest';
 import App from './App';
-
-const mockAppContext = {
-  status: Status.Succeeded,
-  message: '',
-  search: '',
-  list: [
-    {
-      uid: '123',
-      name: 'Name',
-      canine: true,
-      feline: true,
-      avian: true,
-      earthInsect: true,
-      earthAnimal: true,
-    },
-  ],
-};
 
 const mockAnimal = {
   animal: {
@@ -35,25 +17,34 @@ const mockAnimal = {
   },
 };
 
-vi.mock('@/context/hooks', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('@/context/hooks')>();
-  return {
-    ...mod,
-    useAppContext: vi.fn(),
-  };
-});
+const mockPage = {
+  page: {} as Page,
+  animals: [mockAnimal.animal],
+};
 
-vi.mock('@/services/animal', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('@/services/animal')>();
+const mockFlags = {
+  isUninitialized: false,
+  isError: false,
+  isLoading: false,
+  isFetching: false,
+  refetch: vi.fn(),
+};
+
+vi.mock('@/redux', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('@/redux')>();
   return {
     ...mod,
-    fetchAnimal: vi.fn(),
+    useGetPageQuery: vi.fn(),
+    useGetAnimalQuery: vi.fn(),
   };
 });
 
 describe('App Component', () => {
   it('renders without crashing', () => {
-    vi.mocked(useAppContext).mockReturnValue(mockAppContext);
+    vi.mocked(useGetPageQuery).mockReturnValue({
+      data: mockPage,
+      ...mockFlags,
+    });
 
     const { container } = render(<App />);
 
@@ -62,19 +53,25 @@ describe('App Component', () => {
 
   it('renders a detailed card component when clicking on a card', async () => {
     const user = userEvent.setup();
-    vi.mocked(fetchAnimal).mockResolvedValue(mockAnimal);
-    vi.mocked(useAppContext).mockReturnValue(mockAppContext);
+    vi.mocked(useGetPageQuery).mockReturnValue({
+      data: mockPage,
+      ...mockFlags,
+    });
+    vi.mocked(useGetAnimalQuery).mockReturnValue({
+      data: mockAnimal,
+      ...mockFlags,
+    });
 
     render(<App />);
 
     const card = screen.getByRole('article');
     expect(card).toBeInTheDocument();
     expect(screen.queryByText('Card details')).toBeNull();
-    expect(fetchAnimal).not.toBeCalled();
+    expect(useGetAnimalQuery).not.toBeCalled();
 
     await user.click(card);
     expect(screen.getByText('Card details')).toBeInTheDocument();
-    expect(fetchAnimal).toBeCalled();
+    expect(useGetAnimalQuery).toBeCalled();
 
     const close = screen.getByTitle('Close');
 

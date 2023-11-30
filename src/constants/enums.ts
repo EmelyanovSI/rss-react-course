@@ -5,9 +5,14 @@ export enum Severity {
   info = 'info',
 }
 
+export enum ViewMode {
+  Compact = 'compact',
+  Detailed = 'detailed',
+}
+
 export enum Status {
-  Idle,
-  Loading,
-  Succeeded,
-  Failed,
+  Idle = 'idle',
+  Pending = 'pending',
+  Fulfilled = 'fulfilled',
+  Rejected = 'rejected',
 }

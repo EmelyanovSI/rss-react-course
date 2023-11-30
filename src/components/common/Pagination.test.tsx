@@ -57,7 +57,7 @@ describe('Pagination component', () => {
     const page2Button = screen.getByRole('button', { name: /2/ });
     fireEvent.click(page2Button);
 
-    expect(mockHandlers.onPageChange).toHaveBeenCalledWith(2);
+    expect(mockHandlers.onPageChange).toHaveBeenCalledWith('2');
   });
 
   it('calls onPageChange when first page number button is clicked', () => {
@@ -66,7 +66,7 @@ describe('Pagination component', () => {
     const pageFirstButton = screen.getByRole('button', { name: /1/ });
     fireEvent.click(pageFirstButton);
 
-    expect(mockHandlers.onPageChange).toHaveBeenCalledWith(2);
+    expect(mockHandlers.onPageChange).toHaveBeenCalledWith('2');
   });
 
   it('calls onPageChange when last page number button is clicked', () => {
@@ -75,7 +75,7 @@ describe('Pagination component', () => {
     const pageLastButton = screen.getByRole('button', { name: /5/ });
     fireEvent.click(pageLastButton);
 
-    expect(mockHandlers.onPageChange).toHaveBeenCalledWith(2);
+    expect(mockHandlers.onPageChange).toHaveBeenCalledWith('2');
   });
 
   it('calls onPageSizeChange when the page size is changed', () => {
@@ -84,6 +84,6 @@ describe('Pagination component', () => {
     const pageSizeSelect = screen.getByRole('combobox');
     fireEvent.change(pageSizeSelect, { target: { value: '25' } });
 
-    expect(mockHandlers.onPageSizeChange).toHaveBeenCalledWith(25);
+    expect(mockHandlers.onPageSizeChange).toHaveBeenCalledWith('25');
   });
 });

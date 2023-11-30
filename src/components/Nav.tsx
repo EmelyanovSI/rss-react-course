@@ -10,7 +10,7 @@ const Nav: FC<NavProps> = ({ children }) => {
     <nav
       role="navigation"
       className={classNames(
-        'flex justify-end items-center bg-white',
+        'flex justify-between items-center bg-white',
         'px-6 py-2 gap-6 sticky top-0'
       )}
     >

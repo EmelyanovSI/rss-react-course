@@ -1,9 +1,8 @@
-import { Status } from '@/constants';
-import { useAppContext } from '@/context/hooks.tsx';
-import { Animal } from '@/interfaces/animal.ts';
+import { useAppParams } from '@/hooks';
+import { Animal } from '@/interfaces/animal';
 import { render, screen, userEvent } from '@/utils/test-utils';
-import { MemoryRouter, useParams } from 'react-router-dom';
-import ListPage from './ListPage';
+import { MemoryRouter, useOutletContext } from 'react-router-dom';
+import MainPage from './MainPage';
 
 const mockAnimal = {
   name: 'Test Animal',
@@ -15,12 +14,7 @@ const mockAnimal = {
   canine: true,
 } as Animal;
 
-const mockAppContext = {
-  list: [mockAnimal],
-  search: '',
-  status: Status.Succeeded,
-  message: '',
-};
+const mockAppParams = { details: undefined };
 
 const navigate = vi.fn();
 
@@ -30,28 +24,26 @@ vi.mock('react-router-dom', async (importOriginal) => {
     ...mod,
     useParams: vi.fn(),
     useNavigate: vi.fn(() => navigate),
+    useOutletContext: vi.fn(),
   };
 });
 
-vi.mock('@/context/hooks', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('@/context/hooks')>();
+vi.mock('@/hooks', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('@/hooks')>();
   return {
     ...mod,
-    useAppContext: vi.fn(),
+    useAppParams: vi.fn(),
   };
 });
 
-describe('ListPage Component', () => {
+describe('MainPage Component', () => {
   it('renders empty CardList component', () => {
-    vi.mocked(useParams).mockReturnValueOnce({ details: undefined });
-    vi.mocked(useAppContext).mockReturnValueOnce({
-      ...mockAppContext,
-      list: [],
-    });
+    vi.mocked(useAppParams).mockReturnValue(mockAppParams);
+    vi.mocked(useOutletContext).mockReturnValue({ list: [] });
 
     render(
       <MemoryRouter>
-        <ListPage />
+        <MainPage />
       </MemoryRouter>
     );
 
@@ -61,12 +53,12 @@ describe('ListPage Component', () => {
 
   it('renders the CardList component and calls navigate on card click', async () => {
     const user = userEvent.setup();
-    vi.mocked(useParams).mockReturnValueOnce({ details: undefined });
-    vi.mocked(useAppContext).mockReturnValueOnce(mockAppContext);
+    vi.mocked(useAppParams).mockReturnValue(mockAppParams);
+    vi.mocked(useOutletContext).mockReturnValue({ list: [mockAnimal] });
 
     render(
       <MemoryRouter>
-        <ListPage />
+        <MainPage />
       </MemoryRouter>
     );
 
@@ -79,12 +71,12 @@ describe('ListPage Component', () => {
 
   it('calls navigate on CardList wrapper click', async () => {
     const user = userEvent.setup();
-    vi.mocked(useParams).mockReturnValueOnce({ details: 'details' });
-    vi.mocked(useAppContext).mockReturnValueOnce(mockAppContext);
+    vi.mocked(useAppParams).mockReturnValue({ details: 'details' });
+    vi.mocked(useOutletContext).mockReturnValue({ list: [] });
 
     render(
       <MemoryRouter>
-        <ListPage />
+        <MainPage />
       </MemoryRouter>
     );
 

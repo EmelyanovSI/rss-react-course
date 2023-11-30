@@ -18,6 +18,14 @@ export interface Page {
   totalPages: number;
 }
 
+export interface AnimalPageRequest {
+  search: string;
+  page: string;
+  limit: string;
+}
+
+export type AnimalRequest = string | undefined;
+
 export interface AnimalPageResponse {
   animals: Animal[];
   page: Page;
