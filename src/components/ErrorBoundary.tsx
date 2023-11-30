@@ -1,5 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
-import Alert from '../Alert';
+import Alert from './Alert';
+import Button from './Button';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -25,9 +26,21 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error('Error caught by ErrorBoundary:', error, errorInfo);
   }
 
+  handleReload = () => window.location.reload();
+
   render() {
     if (this.state.hasError) {
-      return <Alert message="Something went wrong. Please refresh the page." />;
+      return (
+        <div className="flex flex-col items-center gap-6 p-6">
+          <Alert
+            message="Something went wrong. Please refresh the page."
+            severity="error"
+          />
+          <Button icon="refresh" onClick={this.handleReload}>
+            Refresh
+          </Button>
+        </div>
+      );
     }
 
     return this.props.children;

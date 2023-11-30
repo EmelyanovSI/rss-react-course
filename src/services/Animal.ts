@@ -1,11 +1,10 @@
 import { VITE_BASE_URL } from '../constants';
-import { AnimalResponse } from '../interfaces/Animal';
 
 export async function fetchPage(
-  searchValue: string,
+  searchValue: string = '',
   pageNumber = 0,
   pageSize = 100
-): Promise<AnimalResponse> {
+) {
   const apiUrl = `${VITE_BASE_URL}/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
   const requestBody = new URLSearchParams();
   requestBody.append('name', searchValue);
@@ -18,15 +17,18 @@ export async function fetchPage(
     body: requestBody.toString(),
   };
 
-  try {
-    const response = await fetch(apiUrl, requestOptions);
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw new Error('Failed to fetch data');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    return {} as AnimalResponse;
-  }
+  return fetch(apiUrl, requestOptions);
+}
+
+export async function fetchAnimal(uid: string) {
+  const apiUrl = `${VITE_BASE_URL}/animal?uid=${uid}`;
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+  };
+
+  return fetch(apiUrl, requestOptions);
 }

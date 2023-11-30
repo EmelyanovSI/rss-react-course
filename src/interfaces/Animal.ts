@@ -8,7 +8,7 @@ export interface Animal {
   feline: boolean;
 }
 
-export interface AnimalResponse {
+export interface AnimalPageResponse {
   animals: Animal[];
   page: {
     firstPage: boolean;
@@ -22,4 +22,8 @@ export interface AnimalResponse {
   sort: {
     clauses: [];
   };
+}
+
+export interface AnimalResponse {
+  animal: Animal;
 }

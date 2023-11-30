@@ -1,7 +1,0 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
-  border-bottom: 1px solid var(--border-light);
-}
