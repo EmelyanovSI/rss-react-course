@@ -55,96 +55,130 @@ const HookFormPage: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="name">Name:</label>
+    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
+      <div className="mb-4">
+        <label htmlFor="name" className="block text-gray-700">
+          Name:
+        </label>
         <Controller
           name="name"
           control={control}
           render={({ field }) => (
             <>
-              <input {...field} />
-              <p>{errors.name?.message}</p>
+              <input {...field} className="border p-2 w-full" />
+              <p className="text-red-500">{errors.name?.message}</p>
             </>
           )}
         />
       </div>
 
-      <div>
-        <label htmlFor="age">Age:</label>
+      <div className="mb-4">
+        <label htmlFor="age" className="block text-gray-700">
+          Age:
+        </label>
         <Controller
           name="age"
           control={control}
           render={({ field }) => (
             <>
-              <input type="number" {...field} />
-              <p>{errors.age?.message}</p>
+              <input type="number" {...field} className="border p-2 w-full" />
+              <p className="text-red-500">{errors.age?.message}</p>
             </>
           )}
         />
       </div>
 
-      <div>
-        <label htmlFor="email">Email:</label>
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-700">
+          Email:
+        </label>
         <Controller
           name="email"
           control={control}
           render={({ field }) => (
             <>
-              <input type="email" {...field} />
-              <p>{errors.email?.message}</p>
+              <input type="email" {...field} className="border p-2 w-full" />
+              <p className="text-red-500">{errors.email?.message}</p>
             </>
           )}
         />
       </div>
 
-      <div>
-        <label htmlFor="password">Password:</label>
+      <div className="mb-4">
+        <label htmlFor="password" className="block text-gray-700">
+          Password:
+        </label>
         <Controller
           name="password"
           control={control}
           render={({ field }) => (
             <>
-              <input type="password" {...field} />
-              <p>{errors.password?.message}</p>
+              <input type="password" {...field} className="border p-2 w-full" />
+              <p className="text-red-500">{errors.password?.message}</p>
             </>
           )}
         />
       </div>
 
-      <div>
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+      <div className="mb-4">
+        <label htmlFor="confirmPassword" className="block text-gray-700">
+          Confirm Password:
+        </label>
         <Controller
           name="confirmPassword"
           control={control}
           render={({ field }) => (
             <>
-              <input type="password" {...field} />
-              <p>{errors.confirmPassword?.message}</p>
+              <input type="password" {...field} className="border p-2 w-full" />
+              <p className="text-red-500">{errors.confirmPassword?.message}</p>
             </>
           )}
         />
       </div>
 
-      <div>
-        <label>Gender:</label>
-        <label>
-          <input {...register('gender')} type="radio" value="male" /> Male
-        </label>
-        <label>
-          <input {...register('gender')} type="radio" value="female" /> Female
-        </label>
-        <p>{errors.gender?.message}</p>
+      <div className="mb-4">
+        <label className="block text-gray-700">Gender:</label>
+        <div>
+          <label className="inline-flex items-center">
+            <input
+              {...register('gender')}
+              type="radio"
+              value="male"
+              className="form-radio"
+            />{' '}
+            Male
+          </label>
+          <label className="inline-flex items-center">
+            <input
+              {...register('gender')}
+              type="radio"
+              value="female"
+              className="form-radio"
+            />{' '}
+            Female
+          </label>
+        </div>
+        <p className="text-red-500">{errors.gender?.message}</p>
       </div>
 
-      <div>
-        <label>
-          <input {...register('acceptTerms')} type="checkbox" /> Accept T&C
+      <div className="mb-4">
+        <label className="inline-flex items-center">
+          <input
+            {...register('acceptTerms')}
+            type="checkbox"
+            className="form-checkbox"
+          />{' '}
+          Accept T&C
         </label>
-        <p>{errors.acceptTerms?.message}</p>
+        <p className="text-red-500">{errors.acceptTerms?.message}</p>
       </div>
 
-      <button type="submit">Submit</button>
+      <button
+        type="submit"
+        className="bg-blue-500 text-white py-2 px-4 rounded"
+      >
+        Submit
+      </button>
     </form>
   );
 };
