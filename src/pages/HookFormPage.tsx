@@ -187,24 +187,24 @@ const HookFormPage: FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700">Gender:</label>
-        <div>
-          <label className="inline-flex items-center">
+        <div className="flex flex-col">
+          <label className="inline-flex items-center mb-2">
             <input
               {...register('gender')}
               type="radio"
               value="male"
               className="form-radio"
-            />{' '}
-            Male
+            />
+            <span className="ml-2">Male</span>
           </label>
-          <label className="inline-flex items-center">
+          <label className="inline-flex items-center mb-2">
             <input
               {...register('gender')}
               type="radio"
               value="female"
               className="form-radio"
-            />{' '}
-            Female
+            />
+            <span className="ml-2">Female</span>
           </label>
         </div>
         <p className="text-red-500">{errors.gender?.message}</p>
@@ -216,8 +216,8 @@ const HookFormPage: FC = () => {
             {...register('acceptTerms')}
             type="checkbox"
             className="form-checkbox"
-          />{' '}
-          Accept T&C
+          />
+          <span className="ml-2">Accept T&C</span>
         </label>
         <p className="text-red-500">{errors.acceptTerms?.message}</p>
       </div>
