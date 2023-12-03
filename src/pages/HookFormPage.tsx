@@ -36,7 +36,8 @@ const HookFormPage: FC = () => {
     control,
     handleSubmit,
     register,
-    formState: { errors },
+    trigger,
+    formState: { errors, isValid },
   } = useForm<FormState>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -49,6 +50,10 @@ const HookFormPage: FC = () => {
       acceptTerms: false,
     },
   });
+
+  const handleLiveValidation = async (fieldName: keyof FormState) => {
+    await trigger(fieldName);
+  };
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     dispatch(setFormData(data));
@@ -65,7 +70,15 @@ const HookFormPage: FC = () => {
           control={control}
           render={({ field }) => (
             <>
-              <input {...field} className="border p-2 w-full" />
+              <input
+                {...field}
+                className="border p-2 w-full"
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleLiveValidation('name');
+                }}
+                onBlur={() => handleLiveValidation('name')}
+              />
               <p className="text-red-500">{errors.name?.message}</p>
             </>
           )}
@@ -81,7 +94,16 @@ const HookFormPage: FC = () => {
           control={control}
           render={({ field }) => (
             <>
-              <input type="number" {...field} className="border p-2 w-full" />
+              <input
+                type="number"
+                {...field}
+                className="border p-2 w-full"
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleLiveValidation('age');
+                }}
+                onBlur={() => handleLiveValidation('age')}
+              />
               <p className="text-red-500">{errors.age?.message}</p>
             </>
           )}
@@ -97,7 +119,16 @@ const HookFormPage: FC = () => {
           control={control}
           render={({ field }) => (
             <>
-              <input type="email" {...field} className="border p-2 w-full" />
+              <input
+                type="email"
+                {...field}
+                className="border p-2 w-full"
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleLiveValidation('email');
+                }}
+                onBlur={() => handleLiveValidation('email')}
+              />
               <p className="text-red-500">{errors.email?.message}</p>
             </>
           )}
@@ -113,7 +144,16 @@ const HookFormPage: FC = () => {
           control={control}
           render={({ field }) => (
             <>
-              <input type="password" {...field} className="border p-2 w-full" />
+              <input
+                type="password"
+                {...field}
+                className="border p-2 w-full"
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleLiveValidation('password');
+                }}
+                onBlur={() => handleLiveValidation('password')}
+              />
               <p className="text-red-500">{errors.password?.message}</p>
             </>
           )}
@@ -129,7 +169,16 @@ const HookFormPage: FC = () => {
           control={control}
           render={({ field }) => (
             <>
-              <input type="password" {...field} className="border p-2 w-full" />
+              <input
+                type="password"
+                {...field}
+                className="border p-2 w-full"
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleLiveValidation('confirmPassword');
+                }}
+                onBlur={() => handleLiveValidation('confirmPassword')}
+              />
               <p className="text-red-500">{errors.confirmPassword?.message}</p>
             </>
           )}
@@ -175,7 +224,10 @@ const HookFormPage: FC = () => {
 
       <button
         type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded"
+        className={`bg-blue-500 text-white py-2 px-4 rounded ${
+          !isValid && 'opacity-50 cursor-not-allowed'
+        }`}
+        disabled={!isValid}
       >
         Submit
       </button>
