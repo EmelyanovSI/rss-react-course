@@ -61,7 +61,7 @@ const HookFormPage: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
-      <div className="mb-4">
+      <div className={`${errors.name?.message ? '' : 'mb-6'}`}>
         <label htmlFor="name" className="block text-gray-700">
           Name:
         </label>
@@ -85,7 +85,7 @@ const HookFormPage: FC = () => {
         />
       </div>
 
-      <div className="mb-4">
+      <div className={`${errors.age?.message ? '' : 'mb-6'}`}>
         <label htmlFor="age" className="block text-gray-700">
           Age:
         </label>
@@ -110,7 +110,7 @@ const HookFormPage: FC = () => {
         />
       </div>
 
-      <div className="mb-4">
+      <div className={`${errors.email?.message ? '' : 'mb-6'}`}>
         <label htmlFor="email" className="block text-gray-700">
           Email:
         </label>
@@ -135,7 +135,7 @@ const HookFormPage: FC = () => {
         />
       </div>
 
-      <div className="mb-4">
+      <div className={`${errors.password?.message ? '' : 'mb-6'}`}>
         <label htmlFor="password" className="block text-gray-700">
           Password:
         </label>
@@ -160,7 +160,7 @@ const HookFormPage: FC = () => {
         />
       </div>
 
-      <div className="mb-4">
+      <div className={`${errors.confirmPassword?.message ? '' : 'mb-6'}`}>
         <label htmlFor="confirmPassword" className="block text-gray-700">
           Confirm Password:
         </label>
@@ -185,7 +185,7 @@ const HookFormPage: FC = () => {
         />
       </div>
 
-      <div className="mb-4">
+      <div className={`${errors.gender?.message ? '' : 'mb-6'}`}>
         <label className="block text-gray-700">Gender:</label>
         <div className="flex flex-col">
           <label className="inline-flex items-center mb-2">
@@ -210,7 +210,7 @@ const HookFormPage: FC = () => {
         <p className="text-red-500">{errors.gender?.message}</p>
       </div>
 
-      <div className="mb-4">
+      <div className={`${errors.acceptTerms?.message ? '' : 'mb-6'}`}>
         <label className="inline-flex items-center">
           <input
             {...register('acceptTerms')}
