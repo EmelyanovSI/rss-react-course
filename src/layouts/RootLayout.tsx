@@ -1,5 +1,6 @@
 import Logo from '@/components/common/Logo.tsx';
 import Header from '@/components/Header.tsx';
+import Nav from '@/components/Nav.tsx';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ const RootLayout: FC = () => {
           <Logo />
         </div>
       </Header>
+      <Nav />
       <Outlet />
     </div>
   );
